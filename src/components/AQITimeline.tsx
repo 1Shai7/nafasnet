@@ -123,7 +123,7 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
   ];
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 card-interactive">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
         <div>
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-1">

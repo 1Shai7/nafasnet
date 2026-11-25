@@ -117,13 +117,15 @@ export default function CityCompare({ primaryCity }: CityCompareProps) {
               return (
                 <tr
                   key={item.city}
-                  className={isPrimary ? "bg-zinc-900/50" : "hover:bg-zinc-900/30"}
+                  className={`transition-colors duration-150 ${
+                    isPrimary ? "bg-[#D4AF37]/5" : "hover:bg-zinc-900/40"
+                  }`}
                 >
                   <td className="py-3 pr-4 font-sans">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-zinc-100">{item.city}</span>
                       {isPrimary && (
-                        <span className="px-1.5 py-0.5 text-[9px] font-mono uppercase rounded border border-zinc-700 bg-black text-zinc-300">
+                        <span className="px-1.5 py-0.5 text-[9px] font-mono uppercase rounded border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
                           Active
                         </span>
                       )}

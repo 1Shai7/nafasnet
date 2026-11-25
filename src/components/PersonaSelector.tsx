@@ -175,10 +175,10 @@ export default function PersonaSelector({
                 key={key}
                 type="button"
                 onClick={() => handlePresetClick(key)}
-                className={`text-left p-3 rounded-lg border transition-colors ${
+                className={`text-left p-3 rounded-lg border transition-all duration-200 active:scale-[0.98] ${
                   isSelected
-                    ? "bg-[#D4AF37]/10 text-zinc-100 border-[#D4AF37]/60"
-                    : "bg-black border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/70"
+                    ? "bg-[#D4AF37]/10 text-zinc-100 border-[#D4AF37]/60 shadow-[0_0_16px_-6px_rgba(212,175,55,0.35)]"
+                    : "bg-black border-zinc-800 text-zinc-300 hover:border-[#D4AF37]/30 hover:bg-zinc-900/70"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -221,9 +221,9 @@ export default function PersonaSelector({
                 key={mode}
                 type="button"
                 onClick={() => handleCommuteChange(mode)}
-                className={`py-2 px-2.5 rounded-lg text-xs font-medium border transition-colors text-center min-h-[38px] ${
+                className={`py-2 px-2.5 rounded-lg text-xs font-medium border transition-all duration-200 active:scale-[0.97] text-center min-h-[38px] ${
                   selected
-                    ? "bg-zinc-800 border-zinc-500 text-white"
+                    ? "bg-zinc-800 border-[#D4AF37]/50 text-white"
                     : "bg-black border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700"
                 }`}
               >
@@ -248,9 +248,9 @@ export default function PersonaSelector({
                 key={item.id}
                 type="button"
                 onClick={() => toggleSensitiveMember(item.id)}
-                className={`px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors flex items-center gap-1.5 ${
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium border transition-all duration-200 active:scale-[0.97] flex items-center gap-1.5 ${
                   isActive
-                    ? "bg-zinc-800 border-zinc-500 text-white"
+                    ? "bg-zinc-800 border-[#D4AF37]/50 text-white"
                     : "bg-black border-zinc-800 text-zinc-500 hover:text-zinc-300"
                 }`}
               >

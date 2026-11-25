@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import AnimatedNumber from "@/components/AnimatedNumber";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -342,18 +343,18 @@ export default function ImpactSimulator({
 
             <div className="mt-3 flex items-baseline gap-2">
               <span className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-mono tabular-nums">
-                {metrics.dailyPM25Avoided_ug}
+                <AnimatedNumber value={metrics.dailyPM25Avoided_ug} decimals={1} duration={300} />
               </span>
               <span className="text-sm font-mono text-zinc-400">µg / day</span>
               <span className="ml-auto text-xs font-mono text-emerald-400">
-                -{metrics.reductionPct}%
+                -<AnimatedNumber value={metrics.reductionPct} duration={300} />%
               </span>
             </div>
 
             {/* Visual Reduction Bar */}
             <div className="mt-3 h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#D4AF37] transition-all duration-300"
+                className="h-full bg-[#D4AF37] transition-all duration-500 ease-out"
                 style={{ width: `${metrics.reductionPct}%` }}
               />
             </div>
@@ -362,19 +363,19 @@ export default function ImpactSimulator({
               <div>
                 <div className="text-[10px] font-mono text-zinc-500 uppercase">Monthly Avoided</div>
                 <div className="text-sm font-semibold text-zinc-100 mt-0.5 font-mono">
-                  {metrics.monthlyAvoided_mg} mg
+                  <AnimatedNumber value={metrics.monthlyAvoided_mg} decimals={2} duration={300} /> mg
                 </div>
               </div>
               <div>
                 <div className="text-[10px] font-mono text-zinc-500 uppercase">Net Inhaled</div>
                 <div className="text-sm font-semibold text-amber-400 mt-0.5 font-mono">
-                  {metrics.actualInhaled_ug} µg
+                  <AnimatedNumber value={metrics.actualInhaled_ug} decimals={1} duration={300} /> µg
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-lg border border-zinc-800 bg-black p-5">
+          <div className="rounded-lg border border-zinc-800 bg-black p-5 card-interactive">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-1.5">
                 <Leaf className="w-3.5 h-3.5 text-zinc-400" />
@@ -387,7 +388,7 @@ export default function ImpactSimulator({
 
             <div className="mt-3 flex items-baseline gap-2">
               <span className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-mono tabular-nums">
-                {metrics.co2SavedDaily_grams}
+                <AnimatedNumber value={metrics.co2SavedDaily_grams} duration={300} />
               </span>
               <span className="text-sm font-mono text-zinc-400">g CO₂ / day</span>
             </div>
@@ -395,7 +396,7 @@ export default function ImpactSimulator({
             <div className="mt-4 pt-3 border-t border-zinc-900 flex items-center justify-between text-xs">
               <span className="text-zinc-500">Monthly Commute Offset</span>
               <span className="font-mono font-semibold text-zinc-100">
-                {metrics.monthlyCO2Saved_kg} kg CO₂e
+                <AnimatedNumber value={metrics.monthlyCO2Saved_kg} decimals={1} duration={300} /> kg CO₂e
               </span>
             </div>
           </div>

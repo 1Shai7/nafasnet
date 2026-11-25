@@ -58,11 +58,12 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
   ];
 
   const [activeIdx, setActiveIdx] = useState(0);
+  const [spinTick, setSpinTick] = useState(0);
   const currentFact = facts[activeIdx];
   const Icon = currentFact.icon;
 
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+    <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5 card-interactive">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
@@ -80,9 +81,9 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
                 key={f.id}
                 type="button"
                 onClick={() => setActiveIdx(idx)}
-                className={`h-1.5 rounded-full transition-all ${
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   idx === activeIdx
-                    ? "w-5 bg-zinc-100"
+                    ? "w-5 bg-[#D4AF37]"
                     : "w-1.5 bg-zinc-700 hover:bg-zinc-500"
                 }`}
                 aria-label={`Show fact ${idx + 1}`}
@@ -91,16 +92,22 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
           </div>
           <button
             type="button"
-            onClick={() => setActiveIdx((prev) => (prev + 1) % facts.length)}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-zinc-800 bg-black hover:bg-zinc-900 text-[11px] font-mono text-zinc-300 transition-colors"
+            onClick={() => {
+              setActiveIdx((prev) => (prev + 1) % facts.length);
+              setSpinTick((t) => t + 1);
+            }}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-zinc-800 bg-black hover:bg-zinc-900 hover:border-[#D4AF37]/40 text-[11px] font-mono text-zinc-300 transition-all active:scale-[0.97]"
           >
-            <RefreshCw className="w-3 h-3 text-zinc-400" />
+            <RefreshCw
+              className="w-3 h-3 text-[#D4AF37] transition-transform duration-300"
+              style={{ transform: `rotate(${spinTick * 180}deg)` }}
+            />
             <span>Next Fact</span>
           </button>
         </div>
       </div>
 
-      <div className="mt-3.5 flex items-start gap-3">
+      <div key={currentFact.id} className="mt-3.5 flex items-start gap-3 animate-fact-in">
         <div className="w-9 h-9 rounded-lg border border-[#D4AF37]/30 bg-black flex items-center justify-center shrink-0 mt-0.5">
           <Icon className="w-4 h-4 text-[#D4AF37]" />
         </div>

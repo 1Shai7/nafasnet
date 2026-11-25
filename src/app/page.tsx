@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import {
   AirQualityResponse,
   HouseholdPersona,
@@ -13,8 +14,8 @@ import CityCompare from "@/components/CityCompare";
 import ExposureFacts from "@/components/ExposureFacts";
 import ImpactSimulator from "@/components/ImpactSimulator";
 import PersonaSelector from "@/components/PersonaSelector";
+import AnimatedNumber from "@/components/AnimatedNumber";
 import {
-  Wind,
   Shield,
   Users,
   RefreshCw,
@@ -174,8 +175,15 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 space-y-3">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg border border-[#D4AF37]/40 bg-zinc-950 flex items-center justify-center shrink-0">
-                <Wind className="w-4 h-4 text-[#D4AF37]" />
+              <div className="w-8 h-8 rounded-lg border border-[#D4AF37]/50 bg-black overflow-hidden flex items-center justify-center shrink-0 transition-transform duration-300 hover:scale-105 hover:border-[#D4AF37] shadow-[0_0_16px_-6px_rgba(212,175,55,0.4)]">
+                <Image
+                  src="/logo.png"
+                  alt="NafasNet Logo"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-cover"
+                  priority
+                />
               </div>
               <div>
                 <div className="flex items-center gap-2">
@@ -217,7 +225,7 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Concise Mission & Differentiator Strip */}
-        <section className="rounded-xl border border-zinc-800 border-t-[#D4AF37]/40 bg-zinc-950/95 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <section className="rounded-xl border border-zinc-800 border-t-[#D4AF37]/40 bg-zinc-950/95 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 animate-fade-up stagger-1 card-interactive">
           <div className="max-w-2xl">
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#D4AF37]">
               Why NafasNet
@@ -258,18 +266,21 @@ export default function Dashboard() {
         )}
 
         {/* Dynamic Scary-But-True Exposure Reality Check */}
-        <ExposureFacts aqiData={aqiData} />
+        <div className="animate-fade-up stagger-2">
+          <ExposureFacts aqiData={aqiData} />
+        </div>
 
         {/* SECTION 1: Live Telemetry + Persona Tuning */}
         <div
-          className="grid grid-cols-1 lg:grid-cols-12 gap-5"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-5 animate-fade-up stagger-3"
           id="section-telemetry"
         >
           {/* Realtime Telemetry */}
-          <div className="lg:col-span-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5 flex flex-col justify-between">
+          <div className="lg:col-span-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5 flex flex-col justify-between card-interactive">
             <div>
               <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
-                <span className="uppercase tracking-wider">
+                <span className="uppercase tracking-wider inline-flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-gold-pulse" />
                   Live Atmospheric Reading
                 </span>
                 <span>
@@ -307,13 +318,13 @@ export default function Dashboard() {
 
               <div className="mt-6 flex items-baseline gap-2">
                 <span className="text-5xl font-bold tracking-tight text-white font-mono tabular-nums">
-                  {aqiData?.current.pm2_5 ?? "--"}
+                  <AnimatedNumber value={aqiData?.current.pm2_5} decimals={1} />
                 </span>
                 <span className="text-base font-mono text-zinc-500">µg/m³</span>
                 <span className="ml-auto text-xs font-mono text-zinc-500">
                   US AQI{" "}
-                  <strong className="text-zinc-200 text-sm">
-                    {aqiData?.current.us_aqi ?? "--"}
+                  <strong className="text-[#E5C158] text-sm">
+                    <AnimatedNumber value={aqiData?.current.us_aqi} />
                   </strong>
                 </span>
               </div>
@@ -383,7 +394,7 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 2: Interactive Charts Suite & Multi-City Matrix */}
-        <div id="section-timeline" className="space-y-5">
+        <div id="section-timeline" className="space-y-5 animate-fade-up stagger-4">
           {aqiData?.hourly && aqiData.hourly.length > 0 ? (
             <>
               <AQITimeline
@@ -403,7 +414,7 @@ export default function Dashboard() {
         {/* SECTION 3: Daily Routine & Indoor Hacks */}
         <div
           id="section-routine"
-          className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 space-y-6"
+          className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 space-y-6 animate-fade-up stagger-5"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
             <div>
@@ -443,7 +454,7 @@ export default function Dashboard() {
               {recommendations?.daily_routine.map((window, idx) => (
                 <div
                   key={idx}
-                  className="rounded-lg border border-zinc-800 bg-black p-4 flex flex-col justify-between"
+                  className="rounded-lg border border-zinc-800 bg-black p-4 flex flex-col justify-between card-interactive"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -537,8 +548,9 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {filteredHacks.map((hack, idx) => (
                 <div
-                  key={idx}
-                  className="rounded-lg border border-zinc-800 bg-black p-4 flex flex-col justify-between"
+                  key={`${activeHackTab}-${hack.title}-${idx}`}
+                  className="rounded-lg border border-zinc-800 bg-black p-4 flex flex-col justify-between card-interactive animate-fade-up"
+                  style={{ animationDelay: `${idx * 50}ms` }}
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2.5">
@@ -581,7 +593,7 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 4: Impact Simulator */}
-        <div id="section-simulator">
+        <div id="section-simulator" className="animate-fade-up stagger-6">
           <ImpactSimulator
             key={aqiData?.city || "default"}
             initialPM25={aqiData?.current.pm2_5 ?? 125}
