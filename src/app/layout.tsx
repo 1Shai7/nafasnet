@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PranaGrid • Urban Air Intelligence & Exposure OS",
+  title: "NafasNet • Urban Air Intelligence & Exposure OS",
   description:
     "Translating live hourly air quality telemetry into thermal-inversion safe-windows, zero-cost-to-DIY indoor air hacks, and deterministic PM2.5 & CO2 math.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "PranaGrid",
+    title: "NafasNet",
   },
 };
 

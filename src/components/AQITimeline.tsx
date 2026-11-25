@@ -116,7 +116,7 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
   );
 
   const layers = [
-    { key: "PM2.5", active: showPM25, toggle: () => setShowPM25(!showPM25), color: "#fafafa" },
+    { key: "PM2.5", active: showPM25, toggle: () => setShowPM25(!showPM25), color: "#D4AF37" },
     { key: "PM10", active: showPM10, toggle: () => setShowPM10(!showPM10), color: "#a1a1aa" },
     { key: "NO₂", active: showNO2, toggle: () => setShowNO2(!showNO2), color: "#71717a" },
     { key: "Dust", active: showDust, toggle: () => setShowDust(!showDust), color: "#f59e0b" },
@@ -200,8 +200,8 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
             >
               <defs>
                 <linearGradient id="monoPM25" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ffffff" stopOpacity={0.22} />
-                  <stop offset="95%" stopColor="#ffffff" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.28} />
+                  <stop offset="95%" stopColor="#D4AF37" stopOpacity={0.0} />
                 </linearGradient>
                 <linearGradient id="monoPM10" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#a1a1aa" stopOpacity={0.14} />
@@ -245,7 +245,7 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
                 <Area
                   type="monotone"
                   dataKey="PM2.5"
-                  stroke="#fafafa"
+                  stroke="#D4AF37"
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#monoPM25)"
@@ -310,7 +310,7 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
               />
               <Tooltip content={<CustomTooltip />} />
               <ReferenceLine y={35} stroke="#f59e0b" strokeDasharray="4 4" />
-              {showPM25 && <Bar dataKey="PM2.5" fill="#fafafa" radius={[2, 2, 0, 0]} />}
+              {showPM25 && <Bar dataKey="PM2.5" fill="#D4AF37" radius={[2, 2, 0, 0]} />}
               {showPM10 && <Bar dataKey="PM10" fill="#71717a" radius={[2, 2, 0, 0]} />}
               {showNO2 && <Bar dataKey="NO2" fill="#3f3f46" radius={[2, 2, 0, 0]} />}
               {showDust && <Bar dataKey="Dust" fill="#f59e0b" radius={[2, 2, 0, 0]} />}

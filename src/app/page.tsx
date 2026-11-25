@@ -57,7 +57,7 @@ export default function Dashboard() {
     const pm25 = aqiData?.current.pm2_5 ?? "--";
     const cigs = aqiData ? (aqiData.current.pm2_5 / 22).toFixed(1) : "--";
     const briefLines = [
-      `PranaGrid Daily Air Brief — ${city}`,
+      `NafasNet Daily Air Brief — ${city}`,
       `Live PM2.5: ${pm25} µg/m³ (~${cigs} cigarettes/day) | US AQI: ${aqiData?.current.us_aqi ?? "--"}`,
       `Profile: ${persona.commuteType} | ${persona.homeSetup}`,
       ``,
@@ -168,20 +168,23 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100 font-sans pb-20 sm:pb-12">
+    <div className="min-h-screen mashrabiya-bg text-zinc-100 font-sans pb-20 sm:pb-12">
       {/* Top Header & Location Bar */}
-      <header className="border-b border-zinc-800 bg-black/90 backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b border-zinc-800/90 bg-black/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 space-y-3">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg border border-zinc-700 bg-zinc-950 flex items-center justify-center shrink-0">
-                <Wind className="w-4 h-4 text-zinc-100" />
+              <div className="w-8 h-8 rounded-lg border border-[#D4AF37]/40 bg-zinc-950 flex items-center justify-center shrink-0">
+                <Wind className="w-4 h-4 text-[#D4AF37]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-base sm:text-lg font-semibold tracking-tight text-white">
-                    PranaGrid
+                    NafasNet
                   </h1>
+                  <span className="px-1.5 py-0.5 text-[10px] font-medium rounded border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#E5C158]">
+                    نَفَس
+                  </span>
                   <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded border border-zinc-800 bg-zinc-950 text-zinc-400">
                     Open-Meteo
                   </span>
@@ -214,10 +217,10 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Concise Mission & Differentiator Strip */}
-        <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <section className="rounded-xl border border-zinc-800 border-t-[#D4AF37]/40 bg-zinc-950/95 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="max-w-2xl">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-              Why PranaGrid
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#D4AF37]">
+              Why NafasNet
             </span>
             <p className="text-sm text-zinc-200 mt-1 leading-relaxed">
               Translating live hourly smog telemetry into inversion safe-windows, zero-cost-to-DIY indoor air hacks, and deterministic PM2.5 &amp; CO₂ math.
@@ -646,7 +649,7 @@ export default function Dashboard() {
 
       <footer className="border-t border-zinc-900 bg-black py-6 mt-10 text-center text-[11px] text-zinc-500 px-4">
         <div className="max-w-7xl mx-auto font-mono">
-          PranaGrid · Open-Meteo Air Quality &amp; Gemini 2.5 Flash
+          NafasNet · Open-Meteo Air Quality &amp; Gemini 2.5 Flash
         </div>
       </footer>
     </div>

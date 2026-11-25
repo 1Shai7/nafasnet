@@ -1,4 +1,4 @@
-name: PranaGrid CI
+name: NafasNet CI
 
 on:
   push:

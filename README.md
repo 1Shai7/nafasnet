@@ -1,4 +1,4 @@
-# PranaGrid — Urban Air Intelligence & Exposure OS
+# NafasNet — Urban Air Intelligence & Exposure OS
 
 > **Translating live hourly air quality telemetry into thermal-inversion safe-windows, zero-cost-to-DIY indoor air hacks, multi-city benchmarks, and deterministic PM2.5 & CO₂ math.**
 
@@ -16,14 +16,14 @@
 Indian metropolitan regions experience severe diurnal PM2.5/PM10 spikes driven by morning (`06:00–10:00`) and nocturnal (`20:00–06:00`) thermal inversions, traffic NO₂, and road dust. Existing AQI tools report raw numbers without telling households *when* to ventilate, *how* to protect vulnerable residents on a ₹0–₹1,500 budget, or *how much* particulate intake and CO₂ they avoid by changing commute modes.
 
 ### Target Audience Research
-| Persona | Context | Primary Risk | PranaGrid Protocol |
+| Persona | Context | Primary Risk | NafasNet Protocol |
 |---------|---------|--------------|--------------------|
 | **Caregiver Household** | Kids + Elderly, Arterial Road Home, No Purifier | Infant lung development & elderly COPD flares | Inversion window sealing, wet mopping, safe-window brief |
 | **Two-Wheeler Commuter** | 20 km/day road exposure, Asthmatic | Cumulative PM2.5 + NO₂ inhalation | N95 efficiency math, Metro CO₂ offset, off-peak shift |
 | **Budget Renter / Student** | Ground floor apartment, Zero appliance budget | Road dust resuspension | ₹0 wet mopping + ₹1,500 DIY MERV-13 box fan |
 
 ### Market Research & Competitive Matrix
-| Capability | **PranaGrid** | IQAir | SAFAR | Weather Apps |
+| Capability | **NafasNet** | IQAir | SAFAR | Weather Apps |
 |------------|:---:|:---:|:---:|:---:|
 | Live Hourly PM2.5 / PM10 / NO₂ / Dust | Yes | Yes | Yes | No |
 | Autocomplete + GPS + Google Maps Embed | Yes | Partial | No | Yes |

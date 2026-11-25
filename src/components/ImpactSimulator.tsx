@@ -353,7 +353,7 @@ export default function ImpactSimulator({
             {/* Visual Reduction Bar */}
             <div className="mt-3 h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
               <div
-                className="h-full bg-zinc-100 transition-all duration-300"
+                className="h-full bg-[#D4AF37] transition-all duration-300"
                 style={{ width: `${metrics.reductionPct}%` }}
               />
             </div>

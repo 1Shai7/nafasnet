@@ -103,7 +103,7 @@ export default function PersonaSelector({
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
-      const saved = localStorage.getItem("pranagrid_persona");
+      const saved = localStorage.getItem("nafasnet_persona");
       if (saved) {
         const parsed: { presetKey: PresetKey; persona: HouseholdPersona } =
           JSON.parse(saved);
@@ -120,7 +120,7 @@ export default function PersonaSelector({
     if (typeof window === "undefined") return;
     try {
       localStorage.setItem(
-        "pranagrid_persona",
+        "nafasnet_persona",
         JSON.stringify({ presetKey: activePreset, persona })
       );
     } catch {
@@ -177,14 +177,14 @@ export default function PersonaSelector({
                 onClick={() => handlePresetClick(key)}
                 className={`text-left p-3 rounded-lg border transition-colors ${
                   isSelected
-                    ? "bg-zinc-100 text-zinc-950 border-zinc-100"
+                    ? "bg-[#D4AF37]/10 text-zinc-100 border-[#D4AF37]/60"
                     : "bg-black border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/70"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Icon
                     className={`w-3.5 h-3.5 shrink-0 ${
-                      isSelected ? "text-zinc-900" : "text-zinc-400"
+                      isSelected ? "text-[#D4AF37]" : "text-zinc-400"
                     }`}
                   />
                   <span className="text-xs font-semibold leading-tight">
@@ -193,7 +193,7 @@ export default function PersonaSelector({
                 </div>
                 <p
                   className={`text-[11px] leading-snug ${
-                    isSelected ? "text-zinc-700" : "text-zinc-500"
+                    isSelected ? "text-zinc-300" : "text-zinc-500"
                   }`}
                 >
                   {preset.description}

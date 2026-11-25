@@ -65,7 +65,7 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
     <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border border-amber-500/40 bg-amber-950/30 text-amber-300">
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
             Reality Check
           </span>
           <span className="text-xs font-mono text-zinc-400">
@@ -101,8 +101,8 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
       </div>
 
       <div className="mt-3.5 flex items-start gap-3">
-        <div className="w-9 h-9 rounded-lg border border-zinc-800 bg-black flex items-center justify-center shrink-0 mt-0.5">
-          <Icon className="w-4 h-4 text-amber-400" />
+        <div className="w-9 h-9 rounded-lg border border-[#D4AF37]/30 bg-black flex items-center justify-center shrink-0 mt-0.5">
+          <Icon className="w-4 h-4 text-[#D4AF37]" />
         </div>
         <div>
           <h3 className="text-sm sm:text-base font-semibold text-zinc-100 leading-snug">

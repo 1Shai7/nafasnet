@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
       try {
         const revUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=12`;
         const revRes = await fetch(revUrl, {
-          headers: { "User-Agent": "PranaGrid-AirQuality/1.0" },
+          headers: { "User-Agent": "NafasNet-AirQuality/1.0" },
         });
         if (revRes.ok) {
           const revData = await revRes.json();

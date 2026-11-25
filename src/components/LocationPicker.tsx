@@ -233,7 +233,7 @@ export default function LocationPicker({
           <button
             type="submit"
             disabled={loading}
-            className="px-3.5 h-9 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-xs transition-colors disabled:opacity-50 shrink-0"
+            className="px-3.5 h-9 rounded-lg bg-[#D4AF37] hover:bg-[#E5C158] text-black font-semibold text-xs transition-colors disabled:opacity-50 shrink-0"
           >
             {loading ? "Loading..." : "Search"}
           </button>
@@ -300,7 +300,7 @@ export default function LocationPicker({
               }}
               className={`px-2.5 py-1 rounded-md text-[11px] font-medium border transition-colors shrink-0 ${
                 active
-                  ? "bg-zinc-100 text-zinc-950 border-zinc-100"
+                  ? "bg-[#D4AF37] text-black border-[#D4AF37] font-semibold"
                   : "bg-zinc-950 text-zinc-400 border-zinc-800 hover:text-zinc-200 hover:border-zinc-700"
               }`}
             >
