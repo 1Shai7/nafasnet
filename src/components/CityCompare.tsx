@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { AirQualityResponse } from "@/lib/types";
+import { DEFAULT_COMPARE_CITIES } from "@/lib/constants";
+import { calculateCigarettesPerDay } from "@/lib/airMath";
 import { ArrowLeftRight, Plus, X, Cigarette } from "lucide-react";
 
 interface CityCompareProps {
   primaryCity: AirQualityResponse | null;
 }
-
-const DEFAULT_COMPARE_CITIES = ["Bengaluru", "Mumbai", "Hyderabad"];
 
 export default function CityCompare({ primaryCity }: CityCompareProps) {
   const [compareCities, setCompareCities] = useState<string[]>(DEFAULT_COMPARE_CITIES);
@@ -113,7 +113,7 @@ export default function CityCompare({ primaryCity }: CityCompareProps) {
           <tbody className="divide-y divide-zinc-900 font-mono">
             {rows.map((item, idx) => {
               const isPrimary = idx === 0 && primaryCity?.city === item.city;
-              const cigarettes = (item.current.pm2_5 / 22).toFixed(1);
+              const cigarettes = calculateCigarettesPerDay(item.current.pm2_5).toFixed(1);
               return (
                 <tr
                   key={item.city}

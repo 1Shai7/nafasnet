@@ -16,18 +16,20 @@ import {
   Cigarette,
 } from "lucide-react";
 
+import {
+  ADULT_BREATHING_RATE_M3_PER_HR,
+  CO2_FACTORS,
+  MASK_EFFICIENCY,
+  MaskType,
+} from "@/lib/constants";
+import { calculateImpactMetrics } from "@/lib/airMath";
+
 interface ImpactSimulatorProps {
   initialPM25?: number;
   initialDust?: number;
   locationName?: string;
   commuteType?: string;
 }
-
-const MASK_EFFICIENCY = {
-  n95: 0.95,
-  cloth: 0.3,
-  none: 0.0,
-} as const;
 
 const DUST_MOTES = Array.from({ length: 18 }, (_, i) => ({
   id: i,
@@ -64,52 +66,24 @@ export default function ImpactSimulator({
   const [testSevereSmog, setTestSevereSmog] = useState<boolean>(false);
   const ambientPM25 = testSevereSmog ? 350 : Math.round(initialPM25);
 
-  const [maskType, setMaskType] = useState<"n95" | "cloth" | "none">("n95");
+  const [maskType, setMaskType] = useState<MaskType>("n95");
   const [switchToMetro, setSwitchToMetro] = useState<boolean>(
     commuteType === "Metro"
   );
   const [offPeakTravel, setOffPeakTravel] = useState<boolean>(false);
 
-  const metrics = useMemo(() => {
-    const BREATHING_RATE = 1.2;
-    const currentMaskEff = MASK_EFFICIENCY[maskType];
-    const effectiveHours = offPeakTravel ? exposureHours * 0.8 : exposureHours;
-    const dailyDistance = commuteDistance * 2;
-
-    const dailyPM25Avoided_ug =
-      BREATHING_RATE * effectiveHours * ambientPM25 * currentMaskEff;
-
-    const baselineIntake_ug = BREATHING_RATE * effectiveHours * ambientPM25;
-    const actualInhaled_ug = baselineIntake_ug - dailyPM25Avoided_ug;
-    const monthlyAvoided_mg = (dailyPM25Avoided_ug * 30) / 1000;
-
-    let co2SavedDaily_grams = 0;
-    if (switchToMetro) {
-      co2SavedDaily_grams = dailyDistance * 40 - dailyDistance * 15;
-    }
-    const monthlyCO2Saved_kg = (co2SavedDaily_grams * 22) / 1000;
-
-    let protectionScore = currentMaskEff * 60;
-    if (switchToMetro) protectionScore += 25;
-    if (offPeakTravel) protectionScore += 10;
-    protectionScore = Math.min(100, Math.round(protectionScore));
-
-    const reductionPct =
-      baselineIntake_ug > 0
-        ? Math.round((dailyPM25Avoided_ug / baselineIntake_ug) * 100)
-        : 0;
-
-    return {
-      dailyPM25Avoided_ug: Math.round(dailyPM25Avoided_ug * 10) / 10,
-      monthlyAvoided_mg: Math.round(monthlyAvoided_mg * 100) / 100,
-      baselineIntake_ug: Math.round(baselineIntake_ug * 10) / 10,
-      actualInhaled_ug: Math.round(actualInhaled_ug * 10) / 10,
-      co2SavedDaily_grams: Math.round(co2SavedDaily_grams),
-      monthlyCO2Saved_kg: Math.round(monthlyCO2Saved_kg * 10) / 10,
-      protectionScore,
-      reductionPct,
-    };
-  }, [commuteDistance, exposureHours, ambientPM25, maskType, switchToMetro, offPeakTravel]);
+  const metrics = useMemo(
+    () =>
+      calculateImpactMetrics({
+        ambientPM25,
+        exposureHours,
+        commuteDistanceKm: commuteDistance,
+        maskType,
+        switchToMetro,
+        offPeakTravel,
+      }),
+    [commuteDistance, exposureHours, ambientPM25, maskType, switchToMetro, offPeakTravel]
+  );
 
   const activeMitigationRatio = Math.min(1, metrics.protectionScore / 95);
   const visibleMotes = Math.max(2, Math.round(18 * (1 - activeMitigationRatio * 0.85)));
@@ -412,7 +386,7 @@ export default function ImpactSimulator({
                 PM2.5 Filtered
               </span>
               <span className="text-[10px] text-zinc-500 font-mono">
-                1.2 × {exposureHours}h × {ambientPM25} × {MASK_EFFICIENCY[maskType]}
+                {ADULT_BREATHING_RATE_M3_PER_HR} × {exposureHours}h × {ambientPM25} × {MASK_EFFICIENCY[maskType]}
               </span>
             </div>
 
@@ -468,7 +442,7 @@ export default function ImpactSimulator({
                 CO₂ Emissions Avoided
               </span>
               <span className="text-[10px] text-zinc-500 font-mono">
-                {commuteDistance * 2}km × (40g − 15g)
+                {commuteDistance * 2}km × ({CO2_FACTORS.twoWheelerGramsPerKm}g − {CO2_FACTORS.metroGramsPerKm}g)
               </span>
             </div>
 

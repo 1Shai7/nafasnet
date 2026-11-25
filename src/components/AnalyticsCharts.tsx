@@ -13,18 +13,12 @@ import {
   ReferenceLine,
 } from "recharts";
 import { AirQualityHourlyPoint, AirQualityResponse } from "@/lib/types";
+import { WHO_LIMITS } from "@/lib/constants";
 import { BarChart3, Clock, ShieldAlert } from "lucide-react";
 
 interface AnalyticsChartsProps {
   aqiData: AirQualityResponse;
 }
-
-const WHO_LIMITS = {
-  pm25: 15,
-  pm10: 45,
-  no2: 25,
-  dust: 50,
-};
 
 function getRiskColor(pm25: number): string {
   if (pm25 <= 15) return "#10b981"; // low

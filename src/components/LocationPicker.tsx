@@ -12,12 +12,12 @@ import {
   Loader2,
 } from "lucide-react";
 
-export interface SelectedLocation {
-  city: string;
-  country?: string;
-  latitude?: number;
-  longitude?: number;
-}
+import {
+  INDIAN_METRO_PRESETS,
+  SelectedLocation,
+} from "@/lib/constants";
+
+export type { SelectedLocation };
 
 interface GeocodeCandidate {
   id: string;
@@ -35,17 +35,6 @@ interface LocationPickerProps {
   loading?: boolean;
   onSelectLocation: (loc: SelectedLocation) => void;
 }
-
-const INDIAN_METRO_PRESETS: SelectedLocation[] = [
-  { city: "New Delhi", country: "India", latitude: 28.6139, longitude: 77.209 },
-  { city: "Bengaluru", country: "India", latitude: 12.9716, longitude: 77.5946 },
-  { city: "Mumbai", country: "India", latitude: 19.076, longitude: 72.8777 },
-  { city: "Hyderabad", country: "India", latitude: 17.385, longitude: 78.4867 },
-  { city: "Pune", country: "India", latitude: 18.5204, longitude: 73.8567 },
-  { city: "Chennai", country: "India", latitude: 13.0827, longitude: 80.2707 },
-  { city: "Kolkata", country: "India", latitude: 22.5726, longitude: 88.3639 },
-  { city: "Lucknow", country: "India", latitude: 26.8467, longitude: 80.9462 },
-];
 
 export default function LocationPicker({
   currentCity,

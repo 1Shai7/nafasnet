@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { AirQualityResponse } from "@/lib/types";
+import { calculateCigarettesPerDay } from "@/lib/airMath";
 import { Flame, Cigarette, Wind, AlertOctagon, RefreshCw } from "lucide-react";
 
 interface ExposureFactsProps {
@@ -15,7 +16,7 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
   const city = aqiData?.city || "your city";
 
   // Berkeley Earth: 22 µg/m³ PM2.5 ≈ 1 cigarette / 24h
-  const cigarettesPerDay = pm25 / 22;
+  const cigarettesPerDay = calculateCigarettesPerDay(pm25);
   const cigText =
     cigarettesPerDay < 0.75
       ? "half a cigarette"
