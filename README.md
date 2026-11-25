@@ -59,7 +59,7 @@ Client (page.tsx)
  ├── LocationPicker ──▶ /api/geocode (Forward Search & GPS Reverse Geocode) + Google Maps Embed
  ├── Telemetry & Charts ──▶ /api/air-quality (Open-Meteo 24h PM2.5, PM10, NO2, Dust)
  ├── CityCompare ──▶ /api/air-quality (Multi-city live benchmark + Cigarette Equiv.)
- ├── PersonaSelector ──▶ localStorage ("pranagrid_persona") + /api/recommendations
+ ├── PersonaSelector ──▶ localStorage ("nafasnet_persona") + /api/recommendations
  └── ImpactSimulator ──▶ Deterministic Math Engine (PM2.5 Avoided + CO2 Saved)
 ```
 
@@ -87,7 +87,7 @@ Client (page.tsx)
 ### Local Development
 ```bash
 git clone https://github.com/1Shai7/vayumitra.git
-cd vayumitra
+cd vayumitra  # repo name; app is NafasNet
 npm install
 
 # Optional: add GEMINI_API_KEY in .env.local for live Gemini 2.5 Flash calls
