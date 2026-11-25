@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VayuMitra • Personalized Winter Smog Survival Intelligence",
+  title: "PranaGrid • Urban Air Intelligence & Exposure OS",
   description:
-    "Translating live hourly winter smog telemetry into personalized safe-window routines, zero-cost-to-appliance indoor air hacks, and quantified health/carbon impact — built for India's 400M+ urban breathers.",
+    "Translating live hourly air quality telemetry into thermal-inversion safe-windows, zero-cost-to-DIY indoor air hacks, and deterministic PM2.5 & CO2 math.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "VayuMitra",
+    title: "PranaGrid",
   },
 };
 

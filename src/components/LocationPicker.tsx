@@ -63,10 +63,6 @@ export default function LocationPicker({
   const [showMap, setShowMap] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setQuery(currentCity);
-  }, [currentCity]);
-
   // Close autocomplete dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -82,7 +78,6 @@ export default function LocationPicker({
   useEffect(() => {
     const trimmed = query.trim();
     if (trimmed.length < 2 || trimmed.toLowerCase() === currentCity.toLowerCase()) {
-      setSuggestions([]);
       return;
     }
 
@@ -181,7 +176,14 @@ export default function LocationPicker({
               type="text"
               value={query}
               onFocus={() => suggestions.length > 0 && setDropdownOpen(true)}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setQuery(val);
+                if (val.trim().length < 2) {
+                  setSuggestions([]);
+                  setDropdownOpen(false);
+                }
+              }}
               placeholder="Search any city or area (e.g. Bengaluru, Indiranagar, Pune)..."
               className="w-full rounded-lg border border-zinc-800 bg-zinc-950 pl-9 pr-8 py-2 text-base sm:text-xs text-zinc-100 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none h-9"
             />
@@ -291,7 +293,11 @@ export default function LocationPicker({
             <button
               key={preset.city}
               type="button"
-              onClick={() => onSelectLocation(preset)}
+              onClick={() => {
+                setQuery(preset.city);
+                setDropdownOpen(false);
+                onSelectLocation(preset);
+              }}
               className={`px-2.5 py-1 rounded-md text-[11px] font-medium border transition-colors shrink-0 ${
                 active
                   ? "bg-zinc-100 text-zinc-950 border-zinc-100"

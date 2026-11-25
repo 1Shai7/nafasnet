@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -20,30 +20,24 @@ interface ImpactSimulatorProps {
   locationName?: string;
 }
 
+const MASK_EFFICIENCY = {
+  n95: 0.95,
+  cloth: 0.3,
+  none: 0.0,
+} as const;
+
 export default function ImpactSimulator({
   initialPM25 = 125,
   locationName = "Your City",
 }: ImpactSimulatorProps) {
   const [commuteDistance, setCommuteDistance] = useState<number>(20);
   const [exposureHours, setExposureHours] = useState<number>(1.5);
-  const [ambientPM25, setAmbientPM25] = useState<number>(initialPM25);
-
-  // Sync ambient slider when user selects a new city/location
-  useEffect(() => {
-    if (initialPM25 > 0) {
-      setAmbientPM25(Math.round(initialPM25));
-    }
-  }, [initialPM25]);
+  const [pm25Override, setPm25Override] = useState<number | null>(null);
+  const ambientPM25 = pm25Override ?? Math.round(initialPM25);
 
   const [maskType, setMaskType] = useState<"n95" | "cloth" | "none">("n95");
   const [switchToMetro, setSwitchToMetro] = useState<boolean>(true);
   const [offPeakTravel, setOffPeakTravel] = useState<boolean>(false);
-
-  const MASK_EFFICIENCY = {
-    n95: 0.95,
-    cloth: 0.3,
-    none: 0.0,
-  };
 
   const metrics = useMemo(() => {
     const BREATHING_RATE = 1.2;
@@ -174,7 +168,7 @@ export default function ImpactSimulator({
                 min="15"
                 max="350"
                 value={ambientPM25}
-                onChange={(e) => setAmbientPM25(Number(e.target.value))}
+                onChange={(e) => setPm25Override(Number(e.target.value))}
                 className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-200"
               />
               <div className="flex justify-between text-[10px] font-mono text-zinc-600 mt-1">

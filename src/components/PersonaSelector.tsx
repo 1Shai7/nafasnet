@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { HouseholdPersona } from "@/lib/types";
 import { Users, Bike, Home, Shield, HeartHandshake, GraduationCap } from "lucide-react";
 
@@ -98,17 +98,16 @@ export default function PersonaSelector({
   persona,
   onPersonaChange,
 }: PersonaSelectorProps) {
-  const [activePreset, setActivePreset] = useState<PresetKey>(detectPreset(persona));
+  const activePreset = detectPreset(persona);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
-      const saved = localStorage.getItem("vayu_persona");
+      const saved = localStorage.getItem("pranagrid_persona");
       if (saved) {
         const parsed: { presetKey: PresetKey; persona: HouseholdPersona } =
           JSON.parse(saved);
         if (parsed.persona && parsed.persona.location) {
-          setActivePreset(parsed.presetKey);
           onPersonaChange(parsed.persona);
         }
       }
@@ -121,7 +120,7 @@ export default function PersonaSelector({
     if (typeof window === "undefined") return;
     try {
       localStorage.setItem(
-        "vayu_persona",
+        "pranagrid_persona",
         JSON.stringify({ presetKey: activePreset, persona })
       );
     } catch {
@@ -130,18 +129,15 @@ export default function PersonaSelector({
   }, [persona, activePreset]);
 
   const handlePresetClick = (key: Exclude<PresetKey, null>) => {
-    setActivePreset(key);
     // Preserve the user's currently selected city when switching persona presets
     onPersonaChange({ ...PRESETS[key].persona, location: persona.location });
   };
 
   const handleCommuteChange = (mode: string) => {
-    setActivePreset(null);
     onPersonaChange({ ...persona, commuteType: mode });
   };
 
   const toggleSensitiveMember = (memberId: string) => {
-    setActivePreset(null);
     const exists = persona.sensitiveMembers.includes(memberId);
     const updated = exists
       ? persona.sensitiveMembers.filter((m) => m !== memberId)
@@ -150,7 +146,6 @@ export default function PersonaSelector({
   };
 
   const handleHomeSetupChange = (homeSetup: string) => {
-    setActivePreset(null);
     onPersonaChange({ ...persona, homeSetup });
   };
 

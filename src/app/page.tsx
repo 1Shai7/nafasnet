@@ -9,6 +9,7 @@ import {
 import LocationPicker, { SelectedLocation } from "@/components/LocationPicker";
 import AQITimeline from "@/components/AQITimeline";
 import AnalyticsCharts from "@/components/AnalyticsCharts";
+import CityCompare from "@/components/CityCompare";
 import ImpactSimulator from "@/components/ImpactSimulator";
 import PersonaSelector from "@/components/PersonaSelector";
 import {
@@ -22,6 +23,9 @@ import {
   AlertTriangle,
   Activity,
   Sliders,
+  Share2,
+  Check,
+  Cigarette,
 } from "lucide-react";
 
 const DEFAULT_PERSONA: HouseholdPersona = {
@@ -45,6 +49,29 @@ export default function Dashboard() {
   const [activeHackTab, setActiveHackTab] = useState<
     "all" | "zero-cost" | "diy" | "appliance"
   >("all");
+  const [copiedBrief, setCopiedBrief] = useState(false);
+
+  const handleCopyBrief = async () => {
+    const city = aqiData?.city || persona.location;
+    const pm25 = aqiData?.current.pm2_5 ?? "--";
+    const cigs = aqiData ? (aqiData.current.pm2_5 / 22).toFixed(1) : "--";
+    const briefLines = [
+      `PranaGrid Daily Air Brief — ${city}`,
+      `Live PM2.5: ${pm25} µg/m³ (~${cigs} cigarettes/day) | US AQI: ${aqiData?.current.us_aqi ?? "--"}`,
+      `Profile: ${persona.commuteType} | ${persona.homeSetup}`,
+      ``,
+      ...(recommendations?.daily_routine.map(
+        (w) => `• ${w.time_window}: ${w.ventilation_status.replace("_", " ")} — ${w.activity_advice}`
+      ) || []),
+    ];
+    try {
+      await navigator.clipboard.writeText(briefLines.join("\n"));
+      setCopiedBrief(true);
+      setTimeout(() => setCopiedBrief(false), 2000);
+    } catch {
+      // Ignore clipboard errors
+    }
+  };
 
   const fetchAQI = useCallback(async (loc: SelectedLocation) => {
     setLoadingAQI(true);
@@ -152,7 +179,7 @@ export default function Dashboard() {
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-base sm:text-lg font-semibold tracking-tight text-white">
-                    VayuMitra
+                    PranaGrid
                   </h1>
                   <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded border border-zinc-800 bg-zinc-950 text-zinc-400">
                     Open-Meteo
@@ -189,20 +216,28 @@ export default function Dashboard() {
         <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="max-w-2xl">
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-              Why VayuMitra
+              Why PranaGrid
             </span>
             <p className="text-sm text-zinc-200 mt-1 leading-relaxed">
               Translating live hourly smog telemetry into inversion safe-windows, zero-cost-to-DIY indoor air hacks, and deterministic PM2.5 &amp; CO₂ math.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleCopyBrief}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[11px] font-mono border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-100 transition-colors"
+            >
+              {copiedBrief ? (
+                <Check className="w-3 h-3 text-emerald-400" />
+              ) : (
+                <Share2 className="w-3 h-3 text-zinc-400" />
+              )}
+              {copiedBrief ? "Brief Copied" : "Copy Air Brief"}
+            </button>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border border-zinc-800 bg-black text-zinc-300">
               <Clock className="w-3 h-3 text-zinc-400" />
-              Inversion Safe-Windows
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border border-zinc-800 bg-black text-zinc-300">
-              <Shield className="w-3 h-3 text-zinc-400" />
-              Persona Protocols
+              Inversion Windows
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border border-zinc-800 bg-black text-zinc-300">
               <Activity className="w-3 h-3 text-zinc-400" />
@@ -275,6 +310,17 @@ export default function Dashboard() {
                   </strong>
                 </span>
               </div>
+
+              <div className="mt-3 inline-flex items-center gap-2 px-2.5 py-1 rounded-md border border-zinc-800 bg-black text-[11px] font-mono text-zinc-400">
+                <Cigarette className="w-3.5 h-3.5 text-zinc-400" />
+                <span>
+                  Berkeley Earth equiv:{" "}
+                  <strong className="text-zinc-100">
+                    {aqiData ? (aqiData.current.pm2_5 / 22).toFixed(1) : "--"}
+                  </strong>{" "}
+                  cigarettes/day
+                </span>
+              </div>
             </div>
 
             <div className="grid grid-cols-3 gap-2.5 mt-6 pt-5 border-t border-zinc-800">
@@ -329,7 +375,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* SECTION 2: Interactive Charts Suite */}
+        {/* SECTION 2: Interactive Charts Suite & Multi-City Matrix */}
         <div id="section-timeline" className="space-y-5">
           {aqiData?.hourly && aqiData.hourly.length > 0 ? (
             <>
@@ -338,6 +384,7 @@ export default function Dashboard() {
                 locationName={aqiData.city}
               />
               <AnalyticsCharts aqiData={aqiData} />
+              <CityCompare primaryCity={aqiData} />
             </>
           ) : (
             <div className="p-8 text-center bg-zinc-950 rounded-xl border border-zinc-800 text-zinc-500 text-xs font-mono">
@@ -529,6 +576,7 @@ export default function Dashboard() {
         {/* SECTION 4: Impact Simulator */}
         <div id="section-simulator">
           <ImpactSimulator
+            key={aqiData?.city || "default"}
             initialPM25={aqiData?.current.pm2_5 ?? 125}
             initialDust={aqiData?.current.dust ?? 30}
             locationName={aqiData?.city || persona.location}
@@ -594,7 +642,7 @@ export default function Dashboard() {
 
       <footer className="border-t border-zinc-900 bg-black py-6 mt-10 text-center text-[11px] text-zinc-500 px-4">
         <div className="max-w-7xl mx-auto font-mono">
-          VayuMitra · Open-Meteo Air Quality &amp; Gemini 2.5 Flash
+          PranaGrid · Open-Meteo Air Quality &amp; Gemini 2.5 Flash
         </div>
       </footer>
     </div>
