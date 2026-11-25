@@ -27,13 +27,14 @@ function determineDominantPollutant(pm25: number, pm10: number, no2: number, dus
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const cityQuery = searchParams.get("city") || "New Delhi";
+  const countryQuery = searchParams.get("country") || "";
   const latParam = searchParams.get("latitude");
   const lonParam = searchParams.get("longitude");
 
   let latitude = latParam ? parseFloat(latParam) : null;
   let longitude = lonParam ? parseFloat(lonParam) : null;
   let resolvedCity = cityQuery;
-  let resolvedCountry = "";
+  let resolvedCountry = countryQuery;
 
   try {
     // 1. Fetch Lat/Lon from Open-Meteo Geocoding API if not explicitly supplied

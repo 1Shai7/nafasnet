@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { HouseholdPersona } from "@/lib/types";
-import { Users, Bike, Home, Shield, Sparkles } from "lucide-react";
+import { Users, Bike, Home, Shield, HeartHandshake, GraduationCap } from "lucide-react";
 
 interface PersonaSelectorProps {
   persona: HouseholdPersona;
@@ -13,12 +13,17 @@ type PresetKey = "caregiver" | "commuter" | "student" | null;
 
 const PRESETS: Record<
   Exclude<PresetKey, null>,
-  { label: string; emoji: string; description: string; persona: HouseholdPersona }
+  {
+    label: string;
+    description: string;
+    icon: React.ComponentType<{ className?: string }>;
+    persona: HouseholdPersona;
+  }
 > = {
   caregiver: {
     label: "Caregiver Household",
-    emoji: "👨‍👩‍👧",
     description: "Kids + Elderly, Cross-Ventilation, No Purifier",
+    icon: HeartHandshake,
     persona: {
       location: "New Delhi",
       sensitiveMembers: ["infant", "elderly"],
@@ -29,9 +34,9 @@ const PRESETS: Record<
     },
   },
   commuter: {
-    label: "Daily Two-Wheeler Commuter",
-    emoji: "🏍️",
-    description: "High Road Dust / NO₂ Exposure, Mask + Transit Swap Focus",
+    label: "Two-Wheeler Commuter",
+    description: "Road Dust & NO₂ Exposure, Mask + Transit Focus",
+    icon: Bike,
     persona: {
       location: "New Delhi",
       sensitiveMembers: ["asthmatic"],
@@ -43,8 +48,8 @@ const PRESETS: Record<
   },
   student: {
     label: "Budget Renter / Student",
-    emoji: "🎒",
-    description: "Ground Floor, Zero-Cost & DIY IAQ Hacks Focus",
+    description: "Ground Floor, Zero-Cost & DIY IAQ Hacks",
+    icon: GraduationCap,
     persona: {
       location: "New Delhi",
       sensitiveMembers: [],
@@ -93,11 +98,8 @@ export default function PersonaSelector({
   persona,
   onPersonaChange,
 }: PersonaSelectorProps) {
-  const [activePreset, setActivePreset] = useState<PresetKey>(
-    detectPreset(persona)
-  );
+  const [activePreset, setActivePreset] = useState<PresetKey>(detectPreset(persona));
 
-  // Load from localStorage on mount
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -115,7 +117,6 @@ export default function PersonaSelector({
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Persist to localStorage on change
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -130,7 +131,8 @@ export default function PersonaSelector({
 
   const handlePresetClick = (key: Exclude<PresetKey, null>) => {
     setActivePreset(key);
-    onPersonaChange(PRESETS[key].persona);
+    // Preserve the user's currently selected city when switching persona presets
+    onPersonaChange({ ...PRESETS[key].persona, location: persona.location });
   };
 
   const handleCommuteChange = (mode: string) => {
@@ -153,98 +155,113 @@ export default function PersonaSelector({
   };
 
   return (
-    <div className="flex flex-col gap-4 sm:gap-5">
-      {/* One-Click Preset Buttons */}
+    <div className="flex flex-col gap-4">
+      {/* One-Click Presets */}
       <div>
-        <div className="flex items-center gap-2 mb-2.5">
-          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-          <span className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-            Target Audience Presets
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500">
+            Audience Presets
           </span>
+          {activePreset === null && (
+            <span className="text-[10px] font-mono text-zinc-400">Custom Profile</span>
+          )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          {(Object.entries(PRESETS) as [Exclude<PresetKey, null>, typeof PRESETS[Exclude<PresetKey, null>]][]).map(
-            ([key, preset]) => (
+          {(
+            Object.entries(PRESETS) as [
+              Exclude<PresetKey, null>,
+              (typeof PRESETS)[Exclude<PresetKey, null>]
+            ][]
+          ).map(([key, preset]) => {
+            const Icon = preset.icon;
+            const isSelected = activePreset === key;
+            return (
               <button
                 key={key}
+                type="button"
                 onClick={() => handlePresetClick(key)}
-                className={`text-left p-3 rounded-xl border transition-all active:scale-95 ${
-                  activePreset === key
-                    ? "bg-purple-500/15 border-purple-500/50 ring-1 ring-purple-500/40 shadow-sm shadow-purple-500/10"
-                    : "bg-slate-950 border-slate-800 hover:border-slate-700 hover:bg-slate-900/60"
+                className={`text-left p-3 rounded-lg border transition-colors ${
+                  isSelected
+                    ? "bg-zinc-100 text-zinc-950 border-zinc-100"
+                    : "bg-black border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/70"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-base">{preset.emoji}</span>
-                  <span
-                    className={`text-xs font-bold leading-tight ${
-                      activePreset === key ? "text-purple-200" : "text-slate-300"
+                  <Icon
+                    className={`w-3.5 h-3.5 shrink-0 ${
+                      isSelected ? "text-zinc-900" : "text-zinc-400"
                     }`}
-                  >
+                  />
+                  <span className="text-xs font-semibold leading-tight">
                     {preset.label}
                   </span>
                 </div>
-                <p className="text-[10px] sm:text-[11px] text-slate-500 leading-snug">
+                <p
+                  className={`text-[11px] leading-snug ${
+                    isSelected ? "text-zinc-700" : "text-zinc-500"
+                  }`}
+                >
                   {preset.description}
                 </p>
               </button>
-            )
-          )}
+            );
+          })}
         </div>
-        {activePreset === null && (
-          <p className="text-[10px] text-slate-500 mt-1.5">
-            ✏️ Custom configuration active
-          </p>
-        )}
       </div>
 
       {/* Commute Selector */}
       <div>
-        <label className="text-xs font-semibold text-slate-300 mb-2 flex items-center gap-1.5">
-          <Bike className="w-3.5 h-3.5 text-cyan-400" />
-          Commute Modality:
+        <label className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-2 flex items-center gap-1.5">
+          <Bike className="w-3.5 h-3.5 text-zinc-400" />
+          Commute Modality
         </label>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {COMMUTE_MODES.map((mode) => (
-            <button
-              key={mode}
-              onClick={() => handleCommuteChange(mode)}
-              className={`py-2 px-2.5 rounded-xl text-xs font-semibold border transition-all text-center min-h-[42px] active:scale-95 ${
-                persona.commuteType === mode ||
-                (mode === "Car (AC Recirc)" && persona.commuteType.includes("Car")) ||
-                (mode === "Bicycle / Walk" && persona.commuteType.includes("Bicycle"))
-                  ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-300 shadow-sm ring-1 ring-cyan-500/40"
-                  : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              {mode}
-            </button>
-          ))}
+          {COMMUTE_MODES.map((mode) => {
+            const selected =
+              persona.commuteType === mode ||
+              (mode === "Car (AC Recirc)" && persona.commuteType.includes("Car")) ||
+              (mode === "Bicycle / Walk" && persona.commuteType.includes("Bicycle"));
+            return (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => handleCommuteChange(mode)}
+                className={`py-2 px-2.5 rounded-lg text-xs font-medium border transition-colors text-center min-h-[38px] ${
+                  selected
+                    ? "bg-zinc-800 border-zinc-500 text-white"
+                    : "bg-black border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700"
+                }`}
+              >
+                {mode}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Sensitive Members Tags */}
+      {/* Sensitive Members */}
       <div>
-        <label className="text-xs font-semibold text-slate-300 mb-2 flex items-center gap-1.5">
-          <Shield className="w-3.5 h-3.5 text-purple-400" />
-          Vulnerable Residents:
+        <label className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-2 flex items-center gap-1.5">
+          <Shield className="w-3.5 h-3.5 text-zinc-400" />
+          Vulnerable Residents
         </label>
-        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+        <div className="flex flex-wrap gap-1.5">
           {SENSITIVE_MEMBERS.map((item) => {
             const isActive = persona.sensitiveMembers.includes(item.id);
             return (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => toggleSensitiveMember(item.id)}
-                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 active:scale-95 ${
+                className={`px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors flex items-center gap-1.5 ${
                   isActive
-                    ? "bg-purple-500/20 border-purple-500/40 text-purple-300 shadow-sm"
-                    : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
+                    ? "bg-zinc-800 border-zinc-500 text-white"
+                    : "bg-black border-zinc-800 text-zinc-500 hover:text-zinc-300"
                 }`}
               >
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${
-                    isActive ? "bg-purple-400" : "bg-slate-600"
+                    isActive ? "bg-zinc-100" : "bg-zinc-700"
                   }`}
                 />
                 {item.label}
@@ -254,16 +271,16 @@ export default function PersonaSelector({
         </div>
       </div>
 
-      {/* Home Setup Dropdown */}
+      {/* Home Setup */}
       <div>
-        <label className="text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
-          <Home className="w-3.5 h-3.5 text-emerald-400" />
-          Home Architecture &amp; Filtration:
+        <label className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-1.5 flex items-center gap-1.5">
+          <Home className="w-3.5 h-3.5 text-zinc-400" />
+          Home Architecture &amp; Filtration
         </label>
         <select
           value={persona.homeSetup}
           onChange={(e) => handleHomeSetupChange(e.target.value)}
-          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2.5 sm:py-2 text-base sm:text-xs text-slate-200 focus:border-cyan-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-black px-3 py-2 text-base sm:text-xs text-zinc-200 focus:border-zinc-500 focus:outline-none"
         >
           {HOME_SETUPS.map((setup) => (
             <option key={setup} value={setup}>
@@ -273,15 +290,12 @@ export default function PersonaSelector({
         </select>
       </div>
 
-      {/* Footer note */}
-      <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 pt-1 border-t border-slate-800">
+      <div className="flex items-center justify-between text-[11px] text-zinc-500 pt-2 border-t border-zinc-800/80">
         <span className="flex items-center gap-1.5">
           <Users className="w-3 h-3" />
-          Persona saved to device.
+          Saved locally in browser
         </span>
-        <span className="text-cyan-400 font-semibold flex items-center gap-1">
-          <Sparkles className="w-3 h-3" /> Auto-sync
-        </span>
+        <span className="font-mono text-zinc-400">AUTO-SYNC</span>
       </div>
     </div>
   );
