@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Activity, Clock, Shield, Sliders } from "lucide-react";
+import { Activity, Clock, Shield, Sliders, CloudFog, Home, ArrowUp } from "lucide-react";
 
 interface ScrollHUDProps {
   city: string;
@@ -11,7 +11,9 @@ interface ScrollHUDProps {
 const SECTIONS = [
   { id: "section-telemetry", label: "Live", icon: Activity },
   { id: "section-timeline", label: "Charts", icon: Clock },
+  { id: "section-inversion", label: "Inversion", icon: CloudFog },
   { id: "section-routine", label: "Routine", icon: Shield },
+  { id: "section-iaq-room", label: "Room", icon: Home },
   { id: "section-simulator", label: "Simulator", icon: Sliders },
 ] as const;
 
@@ -90,6 +92,15 @@ export default function ScrollHUD({ city, pm25 }: ScrollHUDProps) {
             </a>
           );
         })}
+
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="Back to top"
+          className="ml-1 p-1.5 rounded-full text-zinc-400 hover:text-[#E5C158] hover:bg-zinc-900 transition-colors"
+        >
+          <ArrowUp className="w-3.5 h-3.5" />
+        </button>
       </div>
     </>
   );

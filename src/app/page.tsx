@@ -345,14 +345,26 @@ export default function Dashboard() {
                   <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-gold-pulse" />
                   Live Atmospheric Reading
                 </span>
-                <span className="font-mono text-zinc-500">
-                  {aqiData?.current.time
-                    ? new Date(aqiData.current.time).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
-                    : "--:--"}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-zinc-500">
+                    {aqiData?.current.time
+                      ? new Date(aqiData.current.time).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })
+                      : "--:--"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => fetchAQI({ city: aqiData?.city || persona.location, latitude: aqiData?.latitude, longitude: aqiData?.longitude })}
+                    disabled={loadingAQI}
+                    aria-label="Refresh live telemetry"
+                    title="Refresh live telemetry"
+                    className="p-1 rounded border border-zinc-800 bg-black hover:border-[#D4AF37]/40 text-zinc-400 hover:text-[#E5C158] transition-colors disabled:opacity-50"
+                  >
+                    <RefreshCw className={`w-3 h-3 ${loadingAQI ? "animate-spin" : ""}`} />
+                  </button>
+                </div>
               </div>
 
               <div className="mt-4 flex items-start justify-between gap-2">

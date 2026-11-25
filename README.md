@@ -56,10 +56,11 @@ Indian metropolitan regions experience severe diurnal PM2.5/PM10 spikes driven b
 ### System & API Architecture
 ```
 Client (page.tsx)
- ├── LocationPicker ──▶ /api/geocode (Forward Search & GPS Reverse Geocode) + Google Maps Embed
+ ├── BrandLogo & LocationPicker ──▶ /api/geocode (Forward Search & GPS) + Google Maps Embed
+ ├── Household Context Bar ──▶ Syncs Commute, Vulnerability & Setup + WhatsApp Family Brief
  ├── Telemetry & Charts ──▶ /api/air-quality (Open-Meteo 24h PM2.5, PM10, NO2, Dust)
- ├── CityCompare ──▶ /api/air-quality (Multi-city live benchmark + Cigarette Equiv.)
- ├── PersonaSelector ──▶ localStorage ("nafasnet_persona") + /api/recommendations
+ ├── InversionScrubber ──▶ 24h Thermal Lid Physics synced to Diurnal Routine Cards
+ ├── RoomBlueprint ──▶ Interactive IAQ Cutaway & Mitigation Protocol Inspector
  └── ImpactSimulator ──▶ Deterministic Math Engine (PM2.5 Avoided + CO2 Saved)
 ```
 
@@ -86,8 +87,8 @@ Client (page.tsx)
 
 ### Local Development
 ```bash
-git clone https://github.com/1Shai7/vayumitra.git
-cd vayumitra  # repo name; app is NafasNet
+git clone https://github.com/1Shai7/nafasnet.git
+cd nafasnet
 npm install
 
 # Optional: add GEMINI_API_KEY in .env.local for live Gemini 2.5 Flash calls

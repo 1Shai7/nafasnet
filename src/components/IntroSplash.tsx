@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function IntroSplash() {
   const [phase, setPhase] = useState<"enter" | "exit" | "done">("enter");
@@ -38,52 +37,55 @@ export default function IntroSplash() {
           : "opacity-100 scale-100"
       }`}
     >
-      {/* Ambient radial gold glow behind emblem */}
       <div
         className="absolute w-72 h-72 rounded-full pointer-events-none opacity-25 blur-3xl"
         style={{
           background:
-            "radial-gradient(circle, rgba(212,175,55,0.45) 0%, rgba(5,5,5,0) 70%)",
+            "radial-gradient(circle, rgba(229,169,60,0.45) 0%, rgba(16,185,129,0.18) 50%, rgba(5,5,5,0) 75%)",
         }}
       />
 
-      {/* Centered Logo + Wordmark */}
+      {/* Centered Mashrabiya Emblem + Bilingual Wordmark */}
       <div className="relative flex flex-col items-center gap-4 animate-intro-logo">
-        <div className="relative w-20 h-20 rounded-2xl border border-[#D4AF37]/60 bg-black p-1 shadow-[0_0_40px_-8px_rgba(212,175,55,0.55)] overflow-hidden">
-          <Image
-            src="/logo.png"
-            alt="NafasNet"
-            width={80}
-            height={80}
-            className="w-full h-full object-cover rounded-xl"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#D4AF37]/15 to-transparent animate-sheen pointer-events-none" />
+        <div className="relative w-20 h-20 rounded-2xl border border-[#E5A93C]/50 bg-black flex items-center justify-center shadow-[0_0_40px_-8px_rgba(229,169,60,0.5)] overflow-hidden">
+          <svg width="52" height="52" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+            <rect x="9" y="9" width="24" height="24" rx="1.5" stroke="#E5A93C" strokeWidth="1.25" strokeOpacity="0.85" />
+            <rect x="9" y="9" width="24" height="24" rx="1.5" transform="rotate(45 21 21)" stroke="#E5A93C" strokeWidth="1.25" strokeOpacity="0.85" />
+            <circle cx="21" cy="13.5" r="1.45" fill="#E5A93C" />
+            <path d="M12.5 21.5C15.5 18.2 18.8 18.2 21.2 21C23.6 23.8 26.8 23.8 29.5 20.5" stroke="#F5F0E6" strokeWidth="1.45" strokeLinecap="round" />
+            <path d="M14 25.5C16.6 23 19.2 23 21.2 25.1C23.2 27.2 25.8 27.2 28.2 24.6" stroke="#E5A93C" strokeWidth="1.35" strokeLinecap="round" />
+          </svg>
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#E5A93C]/15 to-transparent animate-sheen pointer-events-none" />
         </div>
 
         <div className="flex flex-col items-center gap-1.5 text-center">
-          <div className="flex items-center gap-2.5">
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight">
-              <span className="text-white">Nafas</span>
-              <span className="bg-gradient-to-r from-[#F3E5AB] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
-                Net
-              </span>
+          <div className="flex items-baseline gap-2.5">
+            <span
+              className="text-2xl sm:text-3xl font-bold tracking-tight"
+              style={{ fontFamily: "var(--font-display), serif" }}
+            >
+              <span className="text-[#F5F0E6]">Nafas</span>
+              <span className="text-[#E5A93C]">Net</span>
             </span>
-            <span className="px-2 py-0.5 text-xs font-medium rounded border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
+            <span
+              lang="ar"
+              dir="rtl"
+              className="text-xl sm:text-2xl text-[#E5A93C]"
+              style={{ fontFamily: "var(--font-arabic), serif" }}
+            >
               نَفَس
             </span>
           </div>
-          <p className="text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-400">
-            Atmospheric Telemetry OS
+          <p className="text-xs text-zinc-400">
+            Breath &amp; Indoor Air Intelligence for Winter Smog
           </p>
         </div>
 
-        {/* Gold Telemetry Sweep Bar */}
-        <div className="w-48 h-[2px] bg-zinc-900 rounded-full overflow-hidden mt-2">
-          <div className="h-full bg-gradient-to-r from-[#8A6D1B] via-[#D4AF37] to-[#F3E5AB] animate-intro-sweep" />
+        <div className="w-48 h-[2px] bg-zinc-900 rounded-full overflow-hidden mt-1">
+          <div className="h-full bg-gradient-to-r from-[#8A6D1B] via-[#E5A93C] to-[#F5F0E6] animate-intro-sweep" />
         </div>
 
-        <span className="text-[10px] font-mono text-zinc-600 tracking-wider mt-1">
+        <span className="text-[10px] font-mono text-zinc-600 tracking-wider">
           TAP ANYWHERE TO SKIP
         </span>
       </div>
