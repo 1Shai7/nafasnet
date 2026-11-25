@@ -28,7 +28,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#0B1117",
+  themeColor: "#050505",
 };
 
 export default function RootLayout({
@@ -41,7 +41,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#0B1117] text-slate-100 overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-100">
+      <body className="min-h-full flex flex-col bg-[#050505] text-zinc-100 overflow-x-hidden selection:bg-[#D4AF37]/30 selection:text-zinc-100">
         {children}
       </body>
     </html>

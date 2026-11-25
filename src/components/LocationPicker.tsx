@@ -185,7 +185,7 @@ export default function LocationPicker({
                 }
               }}
               placeholder="Search any city or area (e.g. Bengaluru, Indiranagar, Pune)..."
-              className="w-full rounded-lg border border-white/10 bg-[#131B24] pl-9 pr-8 py-2 text-base sm:text-xs text-slate-100 placeholder-slate-500 focus:border-emerald-400/50 focus:outline-none h-9"
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 pl-9 pr-8 py-2 text-base sm:text-xs text-zinc-100 placeholder-zinc-500 focus:border-[#D4AF37]/50 focus:outline-none h-9"
             />
             {searching && (
               <Loader2 className="w-3.5 h-3.5 text-zinc-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
@@ -233,7 +233,7 @@ export default function LocationPicker({
           <button
             type="submit"
             disabled={loading}
-            className="px-3.5 h-9 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-all active:scale-[0.97] disabled:opacity-50 shrink-0"
+            className="px-3.5 h-9 rounded-lg bg-[#D4AF37] hover:bg-[#E5C158] text-black font-semibold text-xs transition-all active:scale-[0.97] disabled:opacity-50 shrink-0"
           >
             {loading ? "Loading..." : "Search"}
           </button>
@@ -245,7 +245,7 @@ export default function LocationPicker({
             type="button"
             onClick={handleUseCurrentLocation}
             disabled={locatingGPS || loading}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-lg border border-white/10 bg-[#131B24] hover:bg-white/5 hover:border-white/20 text-slate-200 text-xs font-medium transition-all active:scale-[0.97] disabled:opacity-50"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-[#D4AF37]/40 text-zinc-200 text-xs font-medium transition-all active:scale-[0.97] disabled:opacity-50"
           >
             {locatingGPS ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin text-zinc-400" />
@@ -300,8 +300,8 @@ export default function LocationPicker({
               }}
               className={`px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 active:scale-[0.97] shrink-0 ${
                 active
-                  ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/50 font-semibold"
-                  : "bg-[#131B24] text-slate-400 border-white/10 hover:text-slate-200 hover:border-white/20"
+                  ? "bg-[#D4AF37] text-black border-[#D4AF37] font-semibold"
+                  : "bg-zinc-950 text-zinc-400 border-zinc-800 hover:text-zinc-200 hover:border-zinc-700"
               }`}
             >
               {preset.city}

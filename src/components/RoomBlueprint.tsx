@@ -84,27 +84,27 @@ export default function RoomBlueprint() {
   };
 
   return (
-    <div className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 card-interactive">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
         <div>
-          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400">
-            <Shield className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-400">
+            <Shield className="w-3.5 h-3.5 text-[#D4AF37]" />
             <span>Interactive Room &amp; Protocol Studio</span>
           </div>
-          <h3 className="text-base sm:text-lg font-semibold text-slate-100 mt-0.5">
+          <h3 className="text-base sm:text-lg font-semibold text-zinc-100 mt-0.5">
             Indoor Air Protection Cutaway &amp; Mitigation Steps
           </h3>
         </div>
 
-        <div className="px-3 py-1.5 rounded-lg border border-white/10 bg-[#0B1117] flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-xs text-slate-400">Room Protection Score</span>
+        <div className="px-3 py-1.5 rounded-lg border border-zinc-800 bg-black flex items-center gap-2 self-start sm:self-auto">
+          <span className="text-xs text-zinc-400">Room Protection Score</span>
           <span
             className={`text-sm font-mono font-bold ${
               score >= 75
                 ? "text-emerald-400"
                 : score >= 50
-                ? "text-amber-400"
-                : "text-slate-200"
+                ? "text-[#E5C158]"
+                : "text-zinc-200"
             }`}
           >
             {score}%
@@ -115,14 +115,14 @@ export default function RoomBlueprint() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-5">
         {/* Left Column: SVG Cutaway + 4 Toggles */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="rounded-lg border border-white/10 bg-[#0B1117] overflow-hidden">
+          <div className="rounded-lg border border-zinc-800/80 bg-black overflow-hidden">
             <svg viewBox="0 0 420 190" className="w-full h-44 sm:h-52 block">
-              <rect x="24" y="20" width="372" height="142" fill="#0F172A" stroke="#334155" strokeWidth="1.5" />
-              <line x1="24" y1="162" x2="396" y2="162" stroke="#475569" strokeWidth="2" />
+              <rect x="24" y="20" width="372" height="142" fill="#09090b" stroke="#27272a" strokeWidth="1.5" />
+              <line x1="24" y1="162" x2="396" y2="162" stroke="#3f3f46" strokeWidth="2" />
 
               {/* Front Door + Damp-Cloth Seal */}
-              <rect x="38" y="64" width="38" height="96" fill="#1E293B" stroke="#475569" strokeWidth="1.2" />
-              <circle cx="70" cy="114" r="2.2" fill="#94A3B8" />
+              <rect x="38" y="64" width="38" height="96" fill="#18181b" stroke="#3f3f46" strokeWidth="1.2" />
+              <circle cx="70" cy="114" r="2.2" fill="#D4AF37" />
               <motion.rect
                 x="38" y="158" width="38" height="4" rx="2" fill="#22D3EE"
                 initial={false}
@@ -132,14 +132,14 @@ export default function RoomBlueprint() {
               />
 
               {/* Window */}
-              <rect x="116" y="48" width="76" height="46" fill="#0B1117" stroke="#475569" strokeWidth="1.2" />
-              <line x1="154" y1="48" x2="154" y2="94" stroke="#334155" strokeWidth="1" />
-              <line x1="116" y1="71" x2="192" y2="71" stroke="#334155" strokeWidth="1" />
+              <rect x="116" y="48" width="76" height="46" fill="#050505" stroke="#3f3f46" strokeWidth="1.2" />
+              <line x1="154" y1="48" x2="154" y2="94" stroke="#27272a" strokeWidth="1" />
+              <line x1="116" y1="71" x2="192" y2="71" stroke="#27272a" strokeWidth="1" />
 
               {/* Kitchen Stove & Hood + Spinning Fan */}
-              <rect x="292" y="114" width="78" height="48" fill="#1E293B" stroke="#475569" strokeWidth="1.2" />
-              <path d="M 304 62 L 358 62 L 344 40 L 318 40 Z" fill="#1E293B" stroke="#64748B" strokeWidth="1.2" />
-              <rect x="324" y="20" width="14" height="20" fill="#1E293B" stroke="#475569" strokeWidth="1" />
+              <rect x="292" y="114" width="78" height="48" fill="#18181b" stroke="#3f3f46" strokeWidth="1.2" />
+              <path d="M 304 62 L 358 62 L 344 40 L 318 40 Z" fill="#18181b" stroke="#52525b" strokeWidth="1.2" />
+              <rect x="324" y="20" width="14" height="20" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
               <motion.g
                 transform="translate(331, 51)"
                 animate={{ rotate: activeMap.chimney ? 360 : 0 }}
@@ -204,15 +204,15 @@ export default function RoomBlueprint() {
                   onClick={() => handleToggle(item.id)}
                   className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border text-left text-xs font-medium transition-all active:scale-[0.98] ${
                     isActive
-                      ? "bg-emerald-500/10 border-emerald-500/50 text-slate-100"
-                      : "bg-[#0B1117] border-white/10 text-slate-400 hover:border-white/20 hover:text-slate-200"
+                      ? "bg-[#D4AF37]/10 border-[#D4AF37]/60 text-zinc-100"
+                      : "bg-black border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-emerald-400" : "text-slate-500"}`} />
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-[#D4AF37]" : "text-zinc-500"}`} />
                     <span>{item.label}</span>
                   </span>
-                  <span className={`text-[10px] font-mono ${isActive ? "text-emerald-300" : "text-slate-500"}`}>
+                  <span className={`text-[10px] font-mono ${isActive ? "text-[#E5C158]" : "text-zinc-500"}`}>
                     {isActive ? "ON" : "OFF"}
                   </span>
                 </button>
@@ -222,31 +222,31 @@ export default function RoomBlueprint() {
         </div>
 
         {/* Right Column: Dynamic Protocol Inspector */}
-        <div className="lg:col-span-5 rounded-lg border border-white/10 bg-[#0B1117] p-4 sm:p-5 flex flex-col justify-between">
+        <div className="lg:col-span-5 rounded-lg border border-zinc-800 bg-black p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between gap-2 pb-3 border-b border-white/10">
-              <span className="text-xs font-medium text-slate-400">Protocol Inspector</span>
-              <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+            <div className="flex items-center justify-between gap-2 pb-3 border-b border-zinc-800">
+              <span className="text-xs font-medium text-zinc-400">Protocol Inspector</span>
+              <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#D4AF37]/10 text-[#E5C158] border border-[#D4AF37]/30">
                 {inspected.reduction}
               </span>
             </div>
 
-            <h4 className="text-base font-semibold text-slate-100 mt-3">{inspected.label}</h4>
-            <p className="text-xs text-slate-400 mt-0.5 font-mono">Estimated cost: {inspected.cost}</p>
+            <h4 className="text-base font-semibold text-zinc-100 mt-3">{inspected.label}</h4>
+            <p className="text-xs text-zinc-400 mt-0.5 font-mono">Estimated cost: {inspected.cost}</p>
 
             <div className="mt-4 space-y-2.5">
               {inspected.steps.map((step, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300 leading-relaxed">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
                   <span>{step}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <div className="mt-5 pt-3 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-400">
             <span>Status in room</span>
-            <span className={`font-mono font-semibold ${activeMap[inspected.id] ? "text-emerald-400" : "text-slate-500"}`}>
+            <span className={`font-mono font-semibold ${activeMap[inspected.id] ? "text-[#E5C158]" : "text-zinc-500"}`}>
               {activeMap[inspected.id] ? "Active (+25%)" : "Inactive"}
             </span>
           </div>

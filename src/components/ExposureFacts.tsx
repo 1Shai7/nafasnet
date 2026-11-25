@@ -63,13 +63,13 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
   const Icon = currentFact.icon;
 
   return (
-    <section className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-5">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+    <section className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded text-xs font-medium border border-amber-500/40 bg-amber-500/10 text-amber-300">
+          <span className="px-2 py-0.5 rounded text-xs font-medium border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
             Reality Check
           </span>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-zinc-400">
             {currentFact.tag.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
           </span>
         </div>
@@ -83,8 +83,8 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
                 onClick={() => setActiveIdx(idx)}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   idx === activeIdx
-                    ? "w-5 bg-emerald-400"
-                    : "w-1.5 bg-slate-700 hover:bg-slate-500"
+                    ? "w-5 bg-[#D4AF37]"
+                    : "w-1.5 bg-zinc-700 hover:bg-zinc-500"
                 }`}
                 aria-label={`Show fact ${idx + 1}`}
               />
@@ -96,10 +96,10 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
               setActiveIdx((prev) => (prev + 1) % facts.length);
               setSpinTick((t) => t + 1);
             }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-white/10 bg-[#0B1117] hover:bg-white/5 text-xs text-slate-300 transition-all active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-zinc-800 bg-black hover:bg-zinc-900 hover:border-[#D4AF37]/40 text-xs text-zinc-300 transition-all active:scale-[0.97]"
           >
             <RefreshCw
-              className="w-3 h-3 text-emerald-400 transition-transform duration-300"
+              className="w-3 h-3 text-[#D4AF37] transition-transform duration-300"
               style={{ transform: `rotate(${spinTick * 180}deg)` }}
             />
             <span>Next Fact</span>
@@ -108,14 +108,14 @@ export default function ExposureFacts({ aqiData }: ExposureFactsProps) {
       </div>
 
       <div key={currentFact.id} className="mt-3.5 flex items-start gap-3 animate-fact-in">
-        <div className="w-9 h-9 rounded-lg border border-amber-500/30 bg-[#0B1117] flex items-center justify-center shrink-0 mt-0.5">
-          <Icon className="w-4 h-4 text-amber-400" />
+        <div className="w-9 h-9 rounded-lg border border-[#D4AF37]/30 bg-black flex items-center justify-center shrink-0 mt-0.5">
+          <Icon className="w-4 h-4 text-[#D4AF37]" />
         </div>
         <div>
-          <h3 className="text-sm sm:text-base font-semibold text-slate-100 leading-snug">
+          <h3 className="text-sm sm:text-base font-semibold text-zinc-100 leading-snug">
             {currentFact.headline}
           </h3>
-          <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+          <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
             {currentFact.detail}
           </p>
         </div>

@@ -43,14 +43,14 @@ export default function InversionScrubber({
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+      <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 card-interactive">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400">
-              <CloudFog className="w-3.5 h-3.5 text-amber-400" />
+            <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-400">
+              <CloudFog className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>Thermal Inversion Physics</span>
             </div>
-            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mt-0.5">
+            <h3 className="text-base sm:text-lg font-semibold text-zinc-100 mt-0.5">
               24-Hour Atmospheric Lid &amp; Dispersion Scrubber
             </h3>
           </div>
@@ -59,10 +59,10 @@ export default function InversionScrubber({
             <span
               className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${
                 isDispersion
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
+                  ? "border-emerald-500/40 bg-emerald-950/40 text-emerald-300"
                   : current.pm25 > 75
-                  ? "border-rose-500/40 bg-rose-500/10 text-rose-300"
-                  : "border-amber-500/40 bg-amber-500/10 text-amber-300"
+                  ? "border-red-500/40 bg-red-950/40 text-red-300"
+                  : "border-amber-500/40 bg-amber-950/40 text-amber-300"
               }`}
             >
               {isDispersion ? (
@@ -74,15 +74,15 @@ export default function InversionScrubber({
                 ? "Dispersion Window — Safe to Ventilate"
                 : "Trapped Inversion — Stay Indoors"}
             </span>
-            <span className="px-2.5 py-1 rounded-md border border-white/10 bg-[#0B1117] text-xs font-mono text-slate-200 tabular-nums">
+            <span className="px-2.5 py-1 rounded-md border border-zinc-800 bg-black text-xs font-mono text-zinc-200 tabular-nums">
               {current.time} ·{" "}
-              <strong className="text-amber-400">{current.pm25}</strong> µg/m³
+              <strong className="text-[#E5C158]">{current.pm25}</strong> µg/m³
             </span>
           </div>
         </div>
 
         {/* SVG Skyline + Sun Arc + Smog Layer */}
-        <div className="mt-4 rounded-lg border border-white/10 bg-[#0B1117] overflow-hidden">
+        <div className="mt-4 rounded-lg border border-zinc-800/80 bg-black overflow-hidden">
           <svg viewBox="0 0 400 165" className="w-full h-44 sm:h-52 block">
             <defs>
               <linearGradient id="smogGrad" x1="0" y1="0" x2="0" y2="1">
@@ -135,8 +135,8 @@ export default function InversionScrubber({
 
             <path
               d="M0 165 L0 128 L28 128 L28 106 L58 106 L58 134 L84 134 L84 94 L116 94 L116 122 L144 122 L144 82 L176 82 L176 118 L208 118 L208 92 L240 92 L240 130 L272 130 L272 78 L306 78 L306 116 L336 116 L336 100 L368 100 L368 126 L400 126 L400 165 Z"
-              fill="#0F172A"
-              stroke="#334155"
+              fill="#09090b"
+              stroke="#27272a"
               strokeWidth="1"
             />
           </svg>
@@ -144,12 +144,12 @@ export default function InversionScrubber({
 
         {/* 0-23 Hour Scrubber */}
         <div className="mt-4 space-y-1.5">
-          <div className="flex items-center justify-between text-xs text-slate-400">
+          <div className="flex items-center justify-between text-xs text-zinc-400">
             <span className="inline-flex items-center gap-1.5">
-              <Sun className="w-3.5 h-3.5 text-amber-400" />
+              <Sun className="w-3.5 h-3.5 text-[#D4AF37]" />
               Scrub hour to highlight matching routine window below
             </span>
-            <span className="font-mono text-slate-200">{current.time}</span>
+            <span className="font-mono text-zinc-200">{current.time}</span>
           </div>
           <input
             type="range"
@@ -158,9 +158,9 @@ export default function InversionScrubber({
             value={selectedHour}
             onChange={(e) => onHourChange(Number(e.target.value))}
             aria-label="Scrub hour of day"
-            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
+            className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#D4AF37]"
           />
-          <div className="flex justify-between text-[11px] font-mono text-slate-500">
+          <div className="flex justify-between text-[11px] font-mono text-zinc-500">
             <span>00:00</span>
             <span>08:00 (Inversion)</span>
             <span>14:00 (Dispersion)</span>

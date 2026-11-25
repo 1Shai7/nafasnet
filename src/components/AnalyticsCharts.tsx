@@ -85,7 +85,7 @@ export default function AnalyticsCharts({ aqiData }: AnalyticsChartsProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       {/* Chart 1: WHO Threshold Comparison */}
-      <div className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6 flex flex-col justify-between">
+      <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 flex flex-col justify-between">
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-zinc-800">
             <div>
@@ -227,7 +227,7 @@ export default function AnalyticsCharts({ aqiData }: AnalyticsChartsProps) {
       </div>
 
       {/* Chart 2: Interactive 24h Hour-by-Hour Risk Explorer */}
-      <div className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6 flex flex-col justify-between">
+      <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 flex flex-col justify-between">
         <div>
           <div className="flex items-center justify-between gap-2 pb-4 border-b border-zinc-800">
             <div>

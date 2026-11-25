@@ -124,7 +124,7 @@ export default function ImpactSimulator({
   );
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6 md:p-8">
+    <div className="relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 md:p-8">
       {/* Reactive 18-Mote Dust Backdrop */}
       <svg
         aria-hidden="true"
@@ -137,7 +137,7 @@ export default function ImpactSimulator({
             cx={`${mote.cx}%`}
             cy={`${mote.cy}%`}
             r={mote.r}
-            fill="#94A3B8"
+            fill="#D4AF37"
             animate={{
               opacity: [moteOpacity * 0.4, moteOpacity, moteOpacity * 0.4],
               y: [0, -8, 0],
@@ -152,19 +152,19 @@ export default function ImpactSimulator({
       </svg>
 
       {/* Header */}
-      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10">
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-zinc-800">
         <div>
-          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400 mb-1">
-            <Gauge className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-400 mb-1">
+            <Gauge className="w-3.5 h-3.5 text-[#D4AF37]" />
             <span>Inhalation &amp; Carbon Model</span>
           </div>
-          <h2 className="text-lg sm:text-xl font-semibold tracking-tight text-slate-100">
+          <h2 className="text-lg sm:text-xl font-semibold tracking-tight text-zinc-100">
             Commuter Impact Simulator — {locationName}
           </h2>
         </div>
 
         {/* Protection Score Readout */}
-        <div className="flex items-center gap-3 bg-[#0B1117] px-4 py-2.5 rounded-lg border border-white/10 shrink-0">
+        <div className="flex items-center gap-3 bg-black px-4 py-2.5 rounded-lg border border-zinc-800 shrink-0">
           <div className="relative flex items-center justify-center">
             <svg className="w-11 h-11 transform -rotate-90">
               <circle
@@ -219,15 +219,15 @@ export default function ImpactSimulator({
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
         {/* Left: Sliders & Toggles */}
         <div className="lg:col-span-7 space-y-5">
-          <div className="space-y-4 bg-[#0B1117] p-4 sm:p-5 rounded-lg border border-white/10">
+          <div className="space-y-4 bg-black p-4 sm:p-5 rounded-lg border border-zinc-800">
             <div className="flex items-center justify-between gap-2">
-              <h3 className="text-xs font-medium text-slate-300 flex items-center gap-2">
-                <Sliders className="w-3.5 h-3.5 text-slate-400" />
+              <h3 className="text-xs font-medium text-zinc-300 flex items-center gap-2">
+                <Sliders className="w-3.5 h-3.5 text-[#D4AF37]" />
                 Exposure Parameters
               </h3>
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs font-mono text-zinc-400">
                 Live PM2.5:{" "}
-                <strong className={testSevereSmog ? "text-rose-400" : "text-slate-100"}>
+                <strong className={testSevereSmog ? "text-red-400" : "text-zinc-100"}>
                   {ambientPM25} µg/m³
                 </strong>
               </span>
@@ -238,16 +238,16 @@ export default function ImpactSimulator({
               onClick={() => setTestSevereSmog((v) => !v)}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg border text-xs font-medium transition-all ${
                 testSevereSmog
-                  ? "bg-rose-500/10 border-rose-500/50 text-rose-200"
-                  : "bg-[#131B24] border-white/10 text-slate-300 hover:border-white/20"
+                  ? "bg-red-950/30 border-red-500/50 text-red-200"
+                  : "bg-zinc-950 border-zinc-800 text-zinc-300 hover:border-zinc-700"
               }`}
             >
               <span>Test Severe Smog (350 µg/m³)</span>
               <span
                 className={`px-2 py-0.5 rounded text-[10px] font-mono ${
                   testSevereSmog
-                    ? "bg-rose-500 text-slate-950 font-semibold"
-                    : "bg-slate-800 text-slate-400"
+                    ? "bg-red-500 text-black font-semibold"
+                    : "bg-zinc-900 text-zinc-400 border border-zinc-800"
                 }`}
               >
                 {testSevereSmog ? "ON" : "OFF"}
@@ -438,9 +438,9 @@ export default function ImpactSimulator({
             )}
 
             {/* Visual Reduction Bar */}
-            <div className="mt-3 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+            <div className="mt-3 h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
               <div
-                className="h-full bg-emerald-400 transition-all duration-500 ease-out"
+                className="h-full bg-[#D4AF37] transition-all duration-500 ease-out"
                 style={{ width: `${metrics.reductionPct}%` }}
               />
             </div>

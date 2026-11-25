@@ -48,27 +48,27 @@ export default function ScrollHUD({ city, pm25 }: ScrollHUDProps) {
 
   return (
     <>
-      {/* Top Atmospheric Scroll Progress Line */}
+      {/* Top Brushed-Gold Scroll Progress Line */}
       <div className="fixed top-0 left-0 right-0 h-[2px] z-50 bg-transparent pointer-events-none">
         <div
-          className="h-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-300 transition-[width] duration-100 ease-out"
+          className="h-full bg-gradient-to-r from-[#8A6D1B] via-[#D4AF37] to-[#F3E5AB] transition-[width] duration-100 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
       {/* Floating Desktop Scroll-Spy Quick Nav */}
       <div
-        className={`hidden sm:flex fixed bottom-5 left-1/2 -translate-x-1/2 z-40 items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-[#131B24]/95 backdrop-blur-md shadow-2xl transition-all duration-300 ${
+        className={`hidden sm:flex fixed bottom-5 left-1/2 -translate-x-1/2 z-40 items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-800 bg-zinc-950/95 backdrop-blur-md shadow-2xl transition-all duration-300 ${
           showFloating
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-4 pointer-events-none"
         }`}
       >
-        <div className="flex items-center gap-1.5 pr-2.5 mr-1 border-r border-white/10 text-[11px] font-mono">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span className="text-slate-300 max-w-[90px] truncate">{city}</span>
+        <div className="flex items-center gap-1.5 pr-2.5 mr-1 border-r border-zinc-800 text-[11px] font-mono">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-gold-pulse" />
+          <span className="text-zinc-300 max-w-[90px] truncate">{city}</span>
           {pm25 !== undefined && (
-            <span className="text-emerald-300 font-semibold">{pm25}</span>
+            <span className="text-[#E5C158] font-semibold">{pm25}</span>
           )}
         </div>
 
@@ -81,8 +81,8 @@ export default function ScrollHUD({ city, pm25 }: ScrollHUDProps) {
               href={`#${sec.id}`}
               className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 ${
                 isActive
-                  ? "bg-emerald-500 text-slate-950 font-semibold"
-                  : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
+                  ? "bg-[#D4AF37] text-black font-semibold"
+                  : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900"
               }`}
             >
               <Icon className="w-3 h-3" />

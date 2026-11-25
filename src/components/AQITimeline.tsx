@@ -116,21 +116,21 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
   );
 
   const layers = [
-    { key: "PM2.5", active: showPM25, toggle: () => setShowPM25(!showPM25), color: "#10B981" },
-    { key: "PM10", active: showPM10, toggle: () => setShowPM10(!showPM10), color: "#94A3B8" },
-    { key: "NO₂", active: showNO2, toggle: () => setShowNO2(!showNO2), color: "#64748B" },
-    { key: "Dust", active: showDust, toggle: () => setShowDust(!showDust), color: "#F59E0B" },
+    { key: "PM2.5", active: showPM25, toggle: () => setShowPM25(!showPM25), color: "#D4AF37" },
+    { key: "PM10", active: showPM10, toggle: () => setShowPM10(!showPM10), color: "#a1a1aa" },
+    { key: "NO₂", active: showNO2, toggle: () => setShowNO2(!showNO2), color: "#71717a" },
+    { key: "Dust", active: showDust, toggle: () => setShowDust(!showDust), color: "#f59e0b" },
   ];
 
   return (
-    <div className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-white/10">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
         <div>
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-400 mb-1">
-            <Activity className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="flex items-center gap-2 text-xs font-medium text-zinc-400 mb-1">
+            <Activity className="w-3.5 h-3.5 text-[#D4AF37]" />
             <span>24-Hour Dispersion Curve</span>
           </div>
-          <h3 className="text-base sm:text-lg font-semibold tracking-tight text-slate-100">
+          <h3 className="text-base sm:text-lg font-semibold tracking-tight text-zinc-100">
             Atmospheric Inversion &amp; Particulate Profile — {locationName}
           </h3>
         </div>
@@ -200,12 +200,12 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
             >
               <defs>
                 <linearGradient id="monoPM25" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.28} />
-                  <stop offset="95%" stopColor="#10B981" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.28} />
+                  <stop offset="95%" stopColor="#D4AF37" stopOpacity={0.0} />
                 </linearGradient>
                 <linearGradient id="monoPM10" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#94A3B8" stopOpacity={0.14} />
-                  <stop offset="95%" stopColor="#94A3B8" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#a1a1aa" stopOpacity={0.14} />
+                  <stop offset="95%" stopColor="#a1a1aa" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
 
@@ -245,7 +245,7 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
                 <Area
                   type="monotone"
                   dataKey="PM2.5"
-                  stroke="#10B981"
+                  stroke="#D4AF37"
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#monoPM25)"
@@ -310,7 +310,7 @@ export default function AQITimeline({ hourlyData, locationName }: AQITimelinePro
               />
               <Tooltip content={<CustomTooltip />} />
               <ReferenceLine y={35} stroke="#f59e0b" strokeDasharray="4 4" />
-              {showPM25 && <Bar dataKey="PM2.5" fill="#10B981" radius={[2, 2, 0, 0]} />}
+              {showPM25 && <Bar dataKey="PM2.5" fill="#D4AF37" radius={[2, 2, 0, 0]} />}
               {showPM10 && <Bar dataKey="PM10" fill="#71717a" radius={[2, 2, 0, 0]} />}
               {showNO2 && <Bar dataKey="NO2" fill="#3f3f46" radius={[2, 2, 0, 0]} />}
               {showDust && <Bar dataKey="Dust" fill="#f59e0b" radius={[2, 2, 0, 0]} />}
