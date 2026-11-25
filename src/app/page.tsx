@@ -215,28 +215,32 @@ export default function Dashboard() {
       <header className="border-b border-zinc-800/90 bg-black/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-3.5">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg border border-[#D4AF37]/50 bg-black overflow-hidden flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl border border-[#D4AF37]/55 bg-black overflow-hidden flex items-center justify-center shrink-0 shadow-[0_0_20px_-6px_rgba(212,175,55,0.45)] transition-transform duration-300 hover:scale-105">
                 <Image
                   src="/logo.png"
                   alt="NafasNet Logo"
-                  width={32}
-                  height={32}
+                  width={40}
+                  height={40}
                   className="w-full h-full object-cover"
                   priority
                 />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-base sm:text-lg font-semibold tracking-tight text-white">
-                    NafasNet
+                <div className="flex items-center gap-2.5">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-none">
+                    <span className="text-white">Nafas</span>
+                    <span className="bg-gradient-to-r from-[#F3E5AB] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
+                      Net
+                    </span>
                   </h1>
-                  <span className="px-1.5 py-0.5 text-[10px] font-medium rounded border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#E5C158]">
+                  <span className="px-2 py-0.5 text-[11px] font-medium rounded-md border border-[#D4AF37]/35 bg-[#D4AF37]/10 text-[#E5C158] leading-none">
                     نَفَس
                   </span>
                 </div>
-                <p className="text-xs text-zinc-500 hidden sm:block">
-                  Winter Smog Telemetry &amp; Household Exposure Intelligence
+                <p className="text-xs text-zinc-400 mt-1 hidden sm:flex items-center gap-2">
+                  <span className="w-3 h-[1px] bg-[#D4AF37]/60 inline-block" />
+                  <span>Winter Smog Telemetry &amp; Household Exposure Intelligence</span>
                 </p>
               </div>
             </div>

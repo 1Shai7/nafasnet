@@ -63,8 +63,11 @@ export default function IntroSplash() {
 
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className="flex items-center gap-2.5">
-            <span className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
-              NafasNet
+            <span className="text-2xl sm:text-3xl font-bold tracking-tight">
+              <span className="text-white">Nafas</span>
+              <span className="bg-gradient-to-r from-[#F3E5AB] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
+                Net
+              </span>
             </span>
             <span className="px-2 py-0.5 text-xs font-medium rounded border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
               نَفَس
