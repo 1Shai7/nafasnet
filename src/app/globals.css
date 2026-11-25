@@ -121,6 +121,71 @@ input[type="range"]:active::-webkit-slider-thumb {
 .stagger-5 { animation-delay: 240ms; }
 .stagger-6 { animation-delay: 290ms; }
 
+@keyframes introLogo {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes introSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes sheen {
+  0% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(160%) skewX(-18deg);
+  }
+}
+
+.animate-intro-logo {
+  animation: introLogo 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-intro-sweep {
+  animation: introSweep 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-sheen {
+  animation: sheen 1.2s ease-in-out 0.25s both;
+}
+
+/* Interactive cursor-tracking gold spotlight on cards */
+.gold-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(212, 175, 55, 0.08),
+    transparent 65%
+  );
+}
+
+.gold-spotlight:hover::before {
+  opacity: 1;
+}
+
 .card-interactive {
   transition: border-color 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, background-color 0.22s ease;
 }

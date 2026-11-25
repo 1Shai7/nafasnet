@@ -15,6 +15,9 @@ import ExposureFacts from "@/components/ExposureFacts";
 import ImpactSimulator from "@/components/ImpactSimulator";
 import PersonaSelector from "@/components/PersonaSelector";
 import AnimatedNumber from "@/components/AnimatedNumber";
+import IntroSplash from "@/components/IntroSplash";
+import ScrollReveal from "@/components/ScrollReveal";
+import ScrollHUD from "@/components/ScrollHUD";
 import {
   Shield,
   Users,
@@ -168,8 +171,19 @@ export default function Dashboard() {
     }
   };
 
+  const handleSpotlightMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+  };
+
   return (
-    <div className="min-h-screen mashrabiya-bg text-zinc-100 font-sans pb-20 sm:pb-12">
+    <div className="min-h-screen mashrabiya-bg text-zinc-100 font-sans pb-20 sm:pb-16">
+      <IntroSplash />
+      <ScrollHUD
+        city={aqiData?.city || persona.location}
+        pm25={aqiData?.current.pm2_5}
+      />
       {/* Top Header & Location Bar */}
       <header className="border-b border-zinc-800/90 bg-black/90 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 space-y-3">
@@ -225,7 +239,10 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Concise Mission & Differentiator Strip */}
-        <section className="rounded-xl border border-zinc-800 border-t-[#D4AF37]/40 bg-zinc-950/95 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 animate-fade-up stagger-1 card-interactive">
+        <section
+          onMouseMove={handleSpotlightMove}
+          className="rounded-xl border border-zinc-800 border-t-[#D4AF37]/40 bg-zinc-950/95 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 animate-fade-up stagger-1 card-interactive gold-spotlight"
+        >
           <div className="max-w-2xl">
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#D4AF37]">
               Why NafasNet
@@ -276,7 +293,10 @@ export default function Dashboard() {
           id="section-telemetry"
         >
           {/* Realtime Telemetry */}
-          <div className="lg:col-span-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5 flex flex-col justify-between card-interactive">
+          <div
+            onMouseMove={handleSpotlightMove}
+            className="lg:col-span-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5 flex flex-col justify-between card-interactive gold-spotlight"
+          >
             <div>
               <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
                 <span className="uppercase tracking-wider inline-flex items-center gap-2">
@@ -394,15 +414,21 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 2: Interactive Charts Suite & Multi-City Matrix */}
-        <div id="section-timeline" className="space-y-5 animate-fade-up stagger-4">
+        <div id="section-timeline" className="space-y-5">
           {aqiData?.hourly && aqiData.hourly.length > 0 ? (
             <>
-              <AQITimeline
-                hourlyData={aqiData.hourly}
-                locationName={aqiData.city}
-              />
-              <AnalyticsCharts aqiData={aqiData} />
-              <CityCompare primaryCity={aqiData} />
+              <ScrollReveal>
+                <AQITimeline
+                  hourlyData={aqiData.hourly}
+                  locationName={aqiData.city}
+                />
+              </ScrollReveal>
+              <ScrollReveal delayMs={60}>
+                <AnalyticsCharts aqiData={aqiData} />
+              </ScrollReveal>
+              <ScrollReveal delayMs={100}>
+                <CityCompare primaryCity={aqiData} />
+              </ScrollReveal>
             </>
           ) : (
             <div className="p-8 text-center bg-zinc-950 rounded-xl border border-zinc-800 text-zinc-500 text-xs font-mono">
@@ -412,10 +438,11 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 3: Daily Routine & Indoor Hacks */}
-        <div
-          id="section-routine"
-          className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 space-y-6 animate-fade-up stagger-5"
-        >
+        <ScrollReveal>
+          <div
+            id="section-routine"
+            className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 space-y-6"
+          >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500">
@@ -590,22 +617,26 @@ export default function Dashboard() {
               ))}
             </div>
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* SECTION 4: Impact Simulator */}
-        <div id="section-simulator" className="animate-fade-up stagger-6">
-          <ImpactSimulator
-            key={aqiData?.city || "default"}
-            initialPM25={aqiData?.current.pm2_5 ?? 125}
-            initialDust={aqiData?.current.dust ?? 30}
-            locationName={aqiData?.city || persona.location}
-          />
-        </div>
+        <ScrollReveal>
+          <div id="section-simulator">
+            <ImpactSimulator
+              key={aqiData?.city || "default"}
+              initialPM25={aqiData?.current.pm2_5 ?? 125}
+              initialDust={aqiData?.current.dust ?? 30}
+              locationName={aqiData?.city || persona.location}
+            />
+          </div>
+        </ScrollReveal>
 
         {/* SECTION 5: Key Precautions */}
         {recommendations?.key_precautions &&
           recommendations.key_precautions.length > 0 && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+            <ScrollReveal>
+              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5 card-interactive">
               <h3 className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                 <Shield className="w-3.5 h-3.5 text-zinc-500" />
                 Safeguards for Vulnerable Residents
@@ -623,7 +654,8 @@ export default function Dashboard() {
                   </div>
                 ))}
               </div>
-            </div>
+              </div>
+            </ScrollReveal>
           )}
       </main>
 
