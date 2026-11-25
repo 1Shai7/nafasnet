@@ -10,6 +10,7 @@ import LocationPicker, { SelectedLocation } from "@/components/LocationPicker";
 import AQITimeline from "@/components/AQITimeline";
 import AnalyticsCharts from "@/components/AnalyticsCharts";
 import CityCompare from "@/components/CityCompare";
+import ExposureFacts from "@/components/ExposureFacts";
 import ImpactSimulator from "@/components/ImpactSimulator";
 import PersonaSelector from "@/components/PersonaSelector";
 import {
@@ -252,6 +253,9 @@ export default function Dashboard() {
             <span>{error}</span>
           </div>
         )}
+
+        {/* Dynamic Scary-But-True Exposure Reality Check */}
+        <ExposureFacts aqiData={aqiData} />
 
         {/* SECTION 1: Live Telemetry + Persona Tuning */}
         <div
