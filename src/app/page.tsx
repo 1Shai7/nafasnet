@@ -18,6 +18,8 @@ import AnimatedNumber from "@/components/AnimatedNumber";
 import IntroSplash from "@/components/IntroSplash";
 import ScrollReveal from "@/components/ScrollReveal";
 import ScrollHUD from "@/components/ScrollHUD";
+import InversionScrubber from "@/components/InversionScrubber";
+import RoomBlueprint from "@/components/RoomBlueprint";
 import {
   Shield,
   Users,
@@ -437,6 +439,20 @@ export default function Dashboard() {
           )}
         </div>
 
+        {/* SECTION 2B: Thermal Inversion Scrubber */}
+        <ScrollReveal>
+          <section id="section-inversion">
+            <InversionScrubber
+              hourlyData={
+                aqiData?.hourly?.map((h) => ({
+                  time: h.formattedTime,
+                  pm25: h.pm2_5,
+                })) ?? []
+              }
+            />
+          </section>
+        </ScrollReveal>
+
         {/* SECTION 3: Daily Routine & Indoor Hacks */}
         <ScrollReveal>
           <div
@@ -618,6 +634,13 @@ export default function Dashboard() {
             </div>
           </div>
           </div>
+        </ScrollReveal>
+
+        {/* SECTION 3B: Interactive Room IAQ Blueprint */}
+        <ScrollReveal>
+          <section id="section-iaq-room">
+            <RoomBlueprint />
+          </section>
         </ScrollReveal>
 
         {/* SECTION 4: Impact Simulator */}

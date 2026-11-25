@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import AnimatedNumber from "@/components/AnimatedNumber";
+import React, { useState, useMemo, useEffect } from "react";
+import { motion, useSpring, useTransform } from "framer-motion";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -13,6 +13,7 @@ import {
   Sliders,
   CheckCircle2,
   HelpCircle,
+  Cigarette,
 } from "lucide-react";
 
 interface ImpactSimulatorProps {
@@ -26,6 +27,27 @@ const MASK_EFFICIENCY = {
   cloth: 0.3,
   none: 0.0,
 } as const;
+
+const DUST_MOTES = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  cx: ((i * 53 + 19) % 94) + 3,
+  cy: ((i * 37 + 11) % 88) + 6,
+  r: 1.2 + (i % 3) * 0.7,
+  duration: 4 + (i % 4) * 1.3,
+}));
+
+function SpringCounter({ value, decimals = 0 }: { value: number; decimals?: number }) {
+  const spring = useSpring(value, { stiffness: 90, damping: 20 });
+  const display = useTransform(spring, (v) =>
+    decimals > 0 ? v.toFixed(decimals) : Math.round(v).toString()
+  );
+
+  useEffect(() => {
+    spring.set(value);
+  }, [spring, value]);
+
+  return <motion.span>{display}</motion.span>;
+}
 
 export default function ImpactSimulator({
   initialPM25 = 125,
@@ -81,10 +103,48 @@ export default function ImpactSimulator({
     };
   }, [commuteDistance, exposureHours, ambientPM25, maskType, switchToMetro, offPeakTravel]);
 
+  const activeMitigationRatio = Math.min(1, metrics.protectionScore / 95);
+  const visibleMotes = Math.max(2, Math.round(18 * (1 - activeMitigationRatio * 0.85)));
+  const moteOpacity = Math.max(0.08, 0.55 * (1 - activeMitigationRatio * 0.8));
+  const cigIconsCount = Math.min(
+    6,
+    Math.max(metrics.dailyPM25Avoided_ug > 0 ? 1 : 0, Math.round(metrics.dailyPM25Avoided_ug / 22))
+  );
+  const leafIconsCount = Math.min(
+    6,
+    Math.max(metrics.co2SavedDaily_grams > 0 ? 1 : 0, Math.round(metrics.co2SavedDaily_grams / 200))
+  );
+
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 md:p-8">
+    <div className="relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 md:p-8">
+      {/* Reactive 18-Mote Dust Backdrop */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        preserveAspectRatio="none"
+      >
+        {DUST_MOTES.slice(0, visibleMotes).map((mote) => (
+          <motion.circle
+            key={mote.id}
+            cx={`${mote.cx}%`}
+            cy={`${mote.cy}%`}
+            r={mote.r}
+            fill="#D4AF37"
+            animate={{
+              opacity: [moteOpacity * 0.4, moteOpacity, moteOpacity * 0.4],
+              y: [0, -8, 0],
+            }}
+            transition={{
+              duration: mote.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </svg>
+
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-zinc-800">
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-zinc-800">
         <div>
           <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-1">
             <Gauge className="w-3.5 h-3.5 text-zinc-400" />
@@ -148,7 +208,7 @@ export default function ImpactSimulator({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
         {/* Left: Sliders & Toggles */}
         <div className="lg:col-span-7 space-y-5">
           <div className="space-y-4 bg-black p-4 sm:p-5 rounded-lg border border-zinc-800">
@@ -343,13 +403,24 @@ export default function ImpactSimulator({
 
             <div className="mt-3 flex items-baseline gap-2">
               <span className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-mono tabular-nums">
-                <AnimatedNumber value={metrics.dailyPM25Avoided_ug} decimals={1} duration={300} />
+                <SpringCounter value={metrics.dailyPM25Avoided_ug} decimals={1} />
               </span>
               <span className="text-sm font-mono text-zinc-400">µg / day</span>
               <span className="ml-auto text-xs font-mono text-emerald-400">
-                -<AnimatedNumber value={metrics.reductionPct} duration={300} />%
+                -<SpringCounter value={metrics.reductionPct} />%
               </span>
             </div>
+
+            {cigIconsCount > 0 && (
+              <div className="mt-2.5 flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
+                <span>Cigarettes avoided:</span>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: cigIconsCount }).map((_, idx) => (
+                    <Cigarette key={idx} className="w-3.5 h-3.5 text-[#D4AF37] opacity-80 line-through" />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Visual Reduction Bar */}
             <div className="mt-3 h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
@@ -363,13 +434,13 @@ export default function ImpactSimulator({
               <div>
                 <div className="text-[10px] font-mono text-zinc-500 uppercase">Monthly Avoided</div>
                 <div className="text-sm font-semibold text-zinc-100 mt-0.5 font-mono">
-                  <AnimatedNumber value={metrics.monthlyAvoided_mg} decimals={2} duration={300} /> mg
+                  <SpringCounter value={metrics.monthlyAvoided_mg} decimals={2} /> mg
                 </div>
               </div>
               <div>
                 <div className="text-[10px] font-mono text-zinc-500 uppercase">Net Inhaled</div>
                 <div className="text-sm font-semibold text-amber-400 mt-0.5 font-mono">
-                  <AnimatedNumber value={metrics.actualInhaled_ug} decimals={1} duration={300} /> µg
+                  <SpringCounter value={metrics.actualInhaled_ug} decimals={1} /> µg
                 </div>
               </div>
             </div>
@@ -388,15 +459,26 @@ export default function ImpactSimulator({
 
             <div className="mt-3 flex items-baseline gap-2">
               <span className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-mono tabular-nums">
-                <AnimatedNumber value={metrics.co2SavedDaily_grams} duration={300} />
+                <SpringCounter value={metrics.co2SavedDaily_grams} />
               </span>
               <span className="text-sm font-mono text-zinc-400">g CO₂ / day</span>
             </div>
 
+            {leafIconsCount > 0 && (
+              <div className="mt-2.5 flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
+                <span>Carbon offset:</span>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: leafIconsCount }).map((_, idx) => (
+                    <Leaf key={idx} className="w-3.5 h-3.5 text-emerald-400" />
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="mt-4 pt-3 border-t border-zinc-900 flex items-center justify-between text-xs">
               <span className="text-zinc-500">Monthly Commute Offset</span>
               <span className="font-mono font-semibold text-zinc-100">
-                <AnimatedNumber value={metrics.monthlyCO2Saved_kg} decimals={1} duration={300} /> kg CO₂e
+                <SpringCounter value={metrics.monthlyCO2Saved_kg} decimals={1} /> kg CO₂e
               </span>
             </div>
           </div>
