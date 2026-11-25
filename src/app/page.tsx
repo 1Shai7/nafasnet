@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import {
   AirQualityResponse,
   HouseholdPersona,
@@ -19,6 +18,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import ScrollHUD from "@/components/ScrollHUD";
 import InversionScrubber from "@/components/InversionScrubber";
 import RoomBlueprint from "@/components/RoomBlueprint";
+import BrandLogo from "@/components/BrandLogo";
 import {
   Shield,
   RefreshCw,
@@ -212,38 +212,34 @@ export default function Dashboard() {
       <ScrollHUD city={aqiData?.city || persona.location} pm25={aqiData?.current.pm2_5} />
 
       {/* Non-Sticky Top Header & Location Bar */}
-      <header className="border-b border-zinc-800/90 bg-black/90">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-3.5">
+      <header className="relative overflow-hidden bg-black/90">
+        {/* Inline SVG Mashrabiya Lattice Pattern masked with radial gradient */}
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.045] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]"
+        >
+          <defs>
+            <pattern
+              id="headerMashrabiya"
+              width="48"
+              height="48"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M24 0L48 24L24 48L0 24Z M24 8L40 24L24 40L8 24Z"
+                fill="none"
+                stroke="#E5A93C"
+                strokeWidth="0.9"
+              />
+              <circle cx="24" cy="24" r="2" fill="none" stroke="#E5A93C" strokeWidth="0.7" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#headerMashrabiya)" />
+        </svg>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-3.5">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl border border-[#D4AF37]/55 bg-black overflow-hidden flex items-center justify-center shrink-0 shadow-[0_0_20px_-6px_rgba(212,175,55,0.45)] transition-transform duration-300 hover:scale-105">
-                <Image
-                  src="/logo.png"
-                  alt="NafasNet Logo"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-cover"
-                  priority
-                />
-              </div>
-              <div>
-                <div className="flex items-center gap-2.5">
-                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-none">
-                    <span className="text-white">Nafas</span>
-                    <span className="bg-gradient-to-r from-[#F3E5AB] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
-                      Net
-                    </span>
-                  </h1>
-                  <span className="px-2 py-0.5 text-[11px] font-medium rounded-md border border-[#D4AF37]/35 bg-[#D4AF37]/10 text-[#E5C158] leading-none">
-                    نَفَس
-                  </span>
-                </div>
-                <p className="text-xs text-zinc-400 mt-1 hidden sm:flex items-center gap-2">
-                  <span className="w-3 h-[1px] bg-[#D4AF37]/60 inline-block" />
-                  <span>Winter Smog Telemetry &amp; Household Exposure Intelligence</span>
-                </p>
-              </div>
-            </div>
+            <BrandLogo />
 
             <div className="text-right font-mono text-xs text-zinc-500 hidden md:block">
               {aqiData
@@ -328,6 +324,8 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
+        {/* Subtle Burnished-Gold Bottom Hairline */}
+        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
