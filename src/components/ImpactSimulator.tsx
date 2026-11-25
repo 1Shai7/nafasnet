@@ -20,6 +20,7 @@ interface ImpactSimulatorProps {
   initialPM25?: number;
   initialDust?: number;
   locationName?: string;
+  commuteType?: string;
 }
 
 const MASK_EFFICIENCY = {
@@ -52,14 +53,21 @@ function SpringCounter({ value, decimals = 0 }: { value: number; decimals?: numb
 export default function ImpactSimulator({
   initialPM25 = 125,
   locationName = "Your City",
+  commuteType = "Two-Wheeler",
 }: ImpactSimulatorProps) {
-  const [commuteDistance, setCommuteDistance] = useState<number>(20);
-  const [exposureHours, setExposureHours] = useState<number>(1.5);
-  const [pm25Override, setPm25Override] = useState<number | null>(null);
-  const ambientPM25 = pm25Override ?? Math.round(initialPM25);
+  const [commuteDistance, setCommuteDistance] = useState<number>(
+    commuteType === "WFH" ? 5 : 20
+  );
+  const [exposureHours, setExposureHours] = useState<number>(
+    commuteType === "WFH" ? 0.5 : 1.5
+  );
+  const [testSevereSmog, setTestSevereSmog] = useState<boolean>(false);
+  const ambientPM25 = testSevereSmog ? 350 : Math.round(initialPM25);
 
   const [maskType, setMaskType] = useState<"n95" | "cloth" | "none">("n95");
-  const [switchToMetro, setSwitchToMetro] = useState<boolean>(true);
+  const [switchToMetro, setSwitchToMetro] = useState<boolean>(
+    commuteType === "Metro"
+  );
   const [offPeakTravel, setOffPeakTravel] = useState<boolean>(false);
 
   const metrics = useMemo(() => {
@@ -116,7 +124,7 @@ export default function ImpactSimulator({
   );
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 md:p-8">
+    <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6 md:p-8">
       {/* Reactive 18-Mote Dust Backdrop */}
       <svg
         aria-hidden="true"
@@ -129,7 +137,7 @@ export default function ImpactSimulator({
             cx={`${mote.cx}%`}
             cy={`${mote.cy}%`}
             r={mote.r}
-            fill="#D4AF37"
+            fill="#94A3B8"
             animate={{
               opacity: [moteOpacity * 0.4, moteOpacity, moteOpacity * 0.4],
               y: [0, -8, 0],
@@ -144,19 +152,19 @@ export default function ImpactSimulator({
       </svg>
 
       {/* Header */}
-      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-zinc-800">
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10">
         <div>
-          <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-1">
-            <Gauge className="w-3.5 h-3.5 text-zinc-400" />
-            <span>Deterministic Inhalation &amp; Carbon Model</span>
+          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400 mb-1">
+            <Gauge className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Inhalation &amp; Carbon Model</span>
           </div>
-          <h2 className="text-lg sm:text-xl font-semibold tracking-tight text-zinc-100">
+          <h2 className="text-lg sm:text-xl font-semibold tracking-tight text-slate-100">
             Commuter Impact Simulator — {locationName}
           </h2>
         </div>
 
         {/* Protection Score Readout */}
-        <div className="flex items-center gap-3 bg-black px-4 py-2.5 rounded-lg border border-zinc-800 shrink-0">
+        <div className="flex items-center gap-3 bg-[#0B1117] px-4 py-2.5 rounded-lg border border-white/10 shrink-0">
           <div className="relative flex items-center justify-center">
             <svg className="w-11 h-11 transform -rotate-90">
               <circle
@@ -211,33 +219,40 @@ export default function ImpactSimulator({
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
         {/* Left: Sliders & Toggles */}
         <div className="lg:col-span-7 space-y-5">
-          <div className="space-y-4 bg-black p-4 sm:p-5 rounded-lg border border-zinc-800">
-            <h3 className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider flex items-center gap-2">
-              <Sliders className="w-3.5 h-3.5 text-zinc-500" />
-              Exposure Parameters
-            </h3>
-
-            <div>
-              <div className="flex justify-between text-xs mb-1.5">
-                <span className="text-zinc-400">Ambient PM2.5 Concentration</span>
-                <span className="font-mono font-semibold text-zinc-100">
+          <div className="space-y-4 bg-[#0B1117] p-4 sm:p-5 rounded-lg border border-white/10">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-xs font-medium text-slate-300 flex items-center gap-2">
+                <Sliders className="w-3.5 h-3.5 text-slate-400" />
+                Exposure Parameters
+              </h3>
+              <span className="text-xs font-mono text-slate-400">
+                Live PM2.5:{" "}
+                <strong className={testSevereSmog ? "text-rose-400" : "text-slate-100"}>
                   {ambientPM25} µg/m³
-                </span>
-              </div>
-              <input
-                type="range"
-                min="15"
-                max="350"
-                value={ambientPM25}
-                onChange={(e) => setPm25Override(Number(e.target.value))}
-                className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-200"
-              />
-              <div className="flex justify-between text-[10px] font-mono text-zinc-600 mt-1">
-                <span>15 (Clean)</span>
-                <span>100 (Poor)</span>
-                <span>350 (Severe)</span>
-              </div>
+                </strong>
+              </span>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setTestSevereSmog((v) => !v)}
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg border text-xs font-medium transition-all ${
+                testSevereSmog
+                  ? "bg-rose-500/10 border-rose-500/50 text-rose-200"
+                  : "bg-[#131B24] border-white/10 text-slate-300 hover:border-white/20"
+              }`}
+            >
+              <span>Test Severe Smog (350 µg/m³)</span>
+              <span
+                className={`px-2 py-0.5 rounded text-[10px] font-mono ${
+                  testSevereSmog
+                    ? "bg-rose-500 text-slate-950 font-semibold"
+                    : "bg-slate-800 text-slate-400"
+                }`}
+              >
+                {testSevereSmog ? "ON" : "OFF"}
+              </span>
+            </button>
 
             <div>
               <div className="flex justify-between text-xs mb-1.5">
@@ -423,9 +438,9 @@ export default function ImpactSimulator({
             )}
 
             {/* Visual Reduction Bar */}
-            <div className="mt-3 h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
+            <div className="mt-3 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#D4AF37] transition-all duration-500 ease-out"
+                className="h-full bg-emerald-400 transition-all duration-500 ease-out"
                 style={{ width: `${metrics.reductionPct}%` }}
               />
             </div>

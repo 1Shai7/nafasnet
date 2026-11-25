@@ -66,14 +66,14 @@ export default function CityCompare({ primaryCity }: CityCompareProps) {
   });
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
+    <div className="rounded-xl border border-white/10 bg-[#131B24] p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
         <div>
-          <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-zinc-500">
-            <ArrowLeftRight className="w-3.5 h-3.5 text-zinc-400" />
+          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400">
+            <ArrowLeftRight className="w-3.5 h-3.5 text-emerald-400" />
             <span>Multi-City Benchmark</span>
           </div>
-          <h3 className="text-base sm:text-lg font-semibold text-zinc-100 mt-0.5">
+          <h3 className="text-base sm:text-lg font-semibold text-slate-100 mt-0.5">
             Live Exposure Comparison Matrix
           </h3>
         </div>
@@ -118,14 +118,14 @@ export default function CityCompare({ primaryCity }: CityCompareProps) {
                 <tr
                   key={item.city}
                   className={`transition-colors duration-150 ${
-                    isPrimary ? "bg-[#D4AF37]/5" : "hover:bg-zinc-900/40"
+                    isPrimary ? "bg-emerald-500/5" : "hover:bg-white/5"
                   }`}
                 >
                   <td className="py-3 pr-4 font-sans">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-zinc-100">{item.city}</span>
+                      <span className="font-medium text-slate-100">{item.city}</span>
                       {isPrimary && (
-                        <span className="px-1.5 py-0.5 text-[9px] font-mono uppercase rounded border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#E5C158]">
+                        <span className="px-1.5 py-0.5 text-[10px] font-medium rounded border border-emerald-500/40 bg-emerald-500/10 text-emerald-300">
                           Active
                         </span>
                       )}

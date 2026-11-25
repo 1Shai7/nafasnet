@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #f4f4f5;
+  --background: #0B1117;
+  --foreground: #f1f5f9;
 }
 
 @theme inline {
@@ -22,10 +22,9 @@ body {
   touch-action: manipulation;
 }
 
-/* Subtle Arabian geometric Mashrabiya lattice texture (3% opacity gold on black) */
+/* Subtle atmospheric slate surface */
 .mashrabiya-bg {
-  background-color: #050505;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z M30 10L50 30L30 50L10 30Z' fill='none' stroke='%23D4AF37' stroke-opacity='0.045' stroke-width='0.75'/%3E%3C/svg%3E");
+  background-color: #0B1117;
 }
 
 /* Hide scrollbar for clean horizontal chip bars on mobile */
@@ -191,9 +190,9 @@ input[type="range"]:active::-webkit-slider-thumb {
 }
 
 .card-interactive:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px -14px rgba(212, 175, 55, 0.22);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px -14px rgba(16, 185, 129, 0.14);
 }
 
 @media (prefers-reduced-motion: reduce) {
